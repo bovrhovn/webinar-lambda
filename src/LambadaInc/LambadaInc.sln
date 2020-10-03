@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Generators", "Lambada.Generators\Lambada.Generators.csproj", "{FD244164-9729-483E-B81A-618C3F39C842}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Models", "Lambada.Models\Lambada.Models.csproj", "{F733B86B-40DA-4DD7-B09C-BDFCE069F8AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Interfaces", "Lambada.Interfaces\Lambada.Interfaces.csproj", "{617D17F2-0F65-4C7A-AF4C-27DEB3DEB079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Base", "Lambada.Base\Lambada.Base.csproj", "{EF006D7A-55EE-4102-B398-C7B3C9574ECA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD244164-9729-483E-B81A-618C3F39C842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD244164-9729-483E-B81A-618C3F39C842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD244164-9729-483E-B81A-618C3F39C842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD244164-9729-483E-B81A-618C3F39C842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F733B86B-40DA-4DD7-B09C-BDFCE069F8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F733B86B-40DA-4DD7-B09C-BDFCE069F8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F733B86B-40DA-4DD7-B09C-BDFCE069F8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F733B86B-40DA-4DD7-B09C-BDFCE069F8AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{617D17F2-0F65-4C7A-AF4C-27DEB3DEB079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{617D17F2-0F65-4C7A-AF4C-27DEB3DEB079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{617D17F2-0F65-4C7A-AF4C-27DEB3DEB079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{617D17F2-0F65-4C7A-AF4C-27DEB3DEB079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,67 @@
+@page
+@model Lambada.Generators.Pages.Factories.OverviewPageModel
+
+@{
+    ViewData["Title"] = "Factories overview";
+}
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+<div class="col-md-12 mb-3 mt-3">
+    <form method="get">
+        <div class="form-group">
+            <label asp-for="Query">Enter search string to search the factories</label>
+            <input type="text" class="form-control" asp-for="Query">
+        </div>
+        <button type="submit" class="btn btn-primary">Search <i class="fas fa-search"></i></button>
+    </form>
+</div>
+
+@if (Model.Factories.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Short information</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var searchModel in Model.Factories)
+        {
+            <tr>
+                <td>
+                    @searchModel.Title
+                </td>
+                <td>
+                    @searchModel.Description
+                </td>
+                <td>
+                    <a href="@searchModel.Route"><i class="fas fa-arrow-circle-right"></i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <nav aria-label="Devices Count">
+        <ul class="pagination">
+            @if (Model.Factories.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Factories.PageIndex - 1)">Previous </a>
+                </li>
+            }
+            @if (Model.Factories.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Factories.PageIndex + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <p class="text-info">No factories registered! Let admin know.</p>
+}

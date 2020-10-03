@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="ViewModels" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Lambada.Base\Lambada.Base.csproj" />
+      <ProjectReference Include="..\Lambada.Interfaces\Lambada.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>
