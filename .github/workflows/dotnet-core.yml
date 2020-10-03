@@ -1,4 +1,4 @@
-name: .NET Core
+name: Build .NET core code on branch master
 
 on:
   push:
@@ -10,7 +10,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./src/LambadaInc
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -20,6 +22,4 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet build --configuration Release --no-restore   
