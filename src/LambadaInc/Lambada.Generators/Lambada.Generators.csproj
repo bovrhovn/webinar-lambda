@@ -5,12 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="ViewModels" />
+      <ProjectReference Include="..\Lambada.Base\Lambada.Base.csproj" />
+      <ProjectReference Include="..\Lambada.Interfaces\Lambada.Interfaces.csproj" />
+      <ProjectReference Include="..\Lambada.Services\Lambada.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Lambada.Base\Lambada.Base.csproj" />
-      <ProjectReference Include="..\Lambada.Interfaces\Lambada.Interfaces.csproj" />
+      <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     </ItemGroup>
 
 </Project>

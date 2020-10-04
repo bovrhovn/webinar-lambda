@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Interfaces", "Lamba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Base", "Lambada.Base\Lambada.Base.csproj", "{EF006D7A-55EE-4102-B398-C7B3C9574ECA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambada.Services", "Lambada.Services\Lambada.Services.csproj", "{A113CE11-DD93-48D3-B0A3-1BF01EAB0017}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF006D7A-55EE-4102-B398-C7B3C9574ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A113CE11-DD93-48D3-B0A3-1BF01EAB0017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A113CE11-DD93-48D3-B0A3-1BF01EAB0017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A113CE11-DD93-48D3-B0A3-1BF01EAB0017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A113CE11-DD93-48D3-B0A3-1BF01EAB0017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

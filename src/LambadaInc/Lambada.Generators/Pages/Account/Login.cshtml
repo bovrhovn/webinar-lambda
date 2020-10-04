@@ -1,0 +1,26 @@
+@page
+@model Lambada.Generators.Pages.Account.LoginPageModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>
+    Login to the Lambada Inc system
+</h2>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <div class="form-group">
+                <label asp-for="Email">Email address</label>
+                <input required="" type="email" asp-for="Email" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input required="" type="password" asp-for="Password" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Login to the lambada system <i class="fa fa-arrow-right"></i></button>
+        </form>
+        <p class="text-info mt-3">If you don't have an account, <a asp-page="/Account/Register">here</a>.</p>
+    </div>
+</div>

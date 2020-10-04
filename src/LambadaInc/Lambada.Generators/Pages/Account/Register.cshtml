@@ -1,0 +1,29 @@
+@page
+@model Lambada.Generators.Pages.Account.RegisterPageModel
+
+@{
+    ViewData["Title"] = "Register as new employee";
+}
+
+<h1>
+    Register as new employee
+</h1>
+<p>
+    Enter neccessary data and register
+</p>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewUser.FullName">Full name</label>
+        <input required="" type="email" asp-for="NewUser.FullName" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewUser.Email">Email address</label>
+        <input required="" type="email" asp-for="NewUser.Email" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewUser.Password">Password</label>
+        <input required="" type="password" asp-for="NewUser.Password" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Register <i class="fa fa-arrow-right"></i></button>
+</form>

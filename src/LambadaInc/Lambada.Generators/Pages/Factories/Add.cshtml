@@ -1,0 +1,38 @@
+@page
+@model Lambada.Generators.Pages.Factories.AddPageModel
+
+@{
+    ViewData["Title"] = "Add factory";
+}
+
+<h1>
+    Register new factory
+</h1>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Factory.Name">Enter name</label>
+                <input type="text" class="form-control" asp-for="Factory.Name">
+            </div>
+            <div class="form-group">
+                <label asp-for="Factory.Description">Enter description</label>
+                <input type="text" class="form-control" asp-for="Factory.Description">
+                <small id="DeviceIdHelp" class="form-text text-muted">you can use html chars as well</small>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factory.Latitude">Enter Latitude</label>
+                <input type="text" class="form-control" asp-for="Factory.Latitude">
+            </div>
+            <div class="form-group">
+                <label asp-for="Factory.Longitude">Enter Longitude</label>
+                <input type="text" class="form-control" asp-for="Factory.Longitude">
+            </div>
+            <button type="submit" class="btn btn-primary">Register new factory</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+@page "{factoryId}"
+@model Lambada.Generators.Pages.Factories.DetailsPageModel
+
+@{
+    var factoryName = Model.Factory.Name;
+    ViewData["Title"] = "Details about " + factoryName;
+}
+
+@if (!string.IsNullOrEmpty(Model.InfoText))
+{
+    <p class="text-info font-weight-bold text-xl-left">@Model.InfoText</p>
+}
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-lg btn-alert float-right"
+           asp-page="/Factories/Delete"
+           asp-route-factoryId="@Model.Factory.FactoryId">
+            Delete Factory @factoryName
+        </a>
+    </div>
+</div>
+<div class="col-md-12">
+    <h1>
+        Details about @factoryName
+    </h1>
+    <p class="text-info">
+        @Model.Factory.Description
+    </p>
+    //TODO: add other variables
+</div>

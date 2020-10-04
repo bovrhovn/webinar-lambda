@@ -7,13 +7,18 @@
 <p class="text-success font-weight-bold text-xl-left">
     @Model.InfoText
 </p>
-<div class="col-md-12 mb-3 mt-3">
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-lg btn-info float-right" asp-page="/Factories/Add">Register new Factory</a>
+    </div>
+</div>
+<div class="col-12 mb-3 mt-3">
     <form method="get">
         <div class="form-group">
-            <label asp-for="Query">Enter search string to search the factories</label>
+            <label asp-for="Query">Enter search string for factories</label>
             <input type="text" class="form-control" asp-for="Query">
         </div>
-        <button type="submit" class="btn btn-primary">Search <i class="fas fa-search"></i></button>
+        <button type="submit" class="btn btn-primary">Search <i class="fa fa-search"></i></button>
     </form>
 </div>
 
@@ -38,7 +43,9 @@
                     @searchModel.Description
                 </td>
                 <td>
-                    <a href="@searchModel.Route"><i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="@searchModel.Route">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </td>
             </tr>
         }
@@ -49,13 +56,13 @@
             @if (Model.Factories.HasPreviousPage)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Factories.PageIndex - 1)">Previous </a>
+                    <a class="page-link" asp-page="/Factories/Overview" asp-route-pageIndex="@(Model.Factories.PageIndex - 1)">Previous </a>
                 </li>
             }
             @if (Model.Factories.HasNextPage)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Factories.PageIndex + 1)">Next</a>
+                    <a class="page-link" asp-page="/Factories/Overview" asp-route-pageIndex="@(Model.Factories.PageIndex + 1)">Next</a>
                 </li>
             }
         </ul>
@@ -63,5 +70,5 @@
 }
 else
 {
-    <p class="text-info">No factories registered! Let admin know.</p>
+    <p class="text-info">No factories registered! Register <a asp-page="/Factories/Add">new factory</a> .</p>
 }

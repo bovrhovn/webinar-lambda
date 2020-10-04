@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Lambada Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
 <header>
@@ -17,7 +18,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Info/Index">Overview</a>
                     </li>
@@ -26,6 +27,16 @@
                     </li>
                 </ul>
             </div>
+            <form class="form-inline my-2 my-lg-0">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span class="font-weight-bolder">Welcome @User.Identity.Name</span>
+                }
+                else
+                {
+                    <a asp-page="/Account/Login">Login</a>
+                }
+            </form>
         </div>
     </nav>
 </header>
@@ -44,5 +55,8 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @RenderSection("Scripts", required: false)
+<script> // apply custom changes to this script tag.
+     @Html.Raw(JavaScriptSnippet.ScriptBody)
+ </script>
 </body>
 </html>
