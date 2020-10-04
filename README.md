@@ -1,4 +1,4 @@
-![Build .NET core code on branch master](https://github.com/bovrhovn/webinar-lambda/workflows/Build%20.NET%20core%20code%20on%20branch%20master/badge.svg)
+![Build and deploy ASP.Net Core app](https://github.com/bovrhovn/webinar-lambda/workflows/Build%20and%20deploy%20ASP.Net%20Core%20app%20to%20Azure%20Web%20App%20-%20lambada-generator/badge.svg)
 
 # Webinar demo
 Repository with demo code to showcase, how to leverage different Azure technologies to work with large amount of data and realtime representations of results.
