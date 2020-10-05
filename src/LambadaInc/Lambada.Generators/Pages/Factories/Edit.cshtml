@@ -6,11 +6,32 @@
     ViewData["Title"] = "Edit factory " + factoryName;
 }
 
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Overview">Factories</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Editing factory @factoryName</li>
+    </ol>
+}
+
 <h1>Editing factory @factoryName</h1>
 
 <p class="text-success font-weight-bold text-xl-left">
     @Model.InfoText
 </p>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-lg btn-alert float-right"
+           asp-page="/Factories/Delete"
+           asp-route-factoryId="@Model.Factory.FactoryId">
+            Delete Factory @factoryName
+        </a>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12 mb-3">
         <form method="post">
@@ -31,7 +52,7 @@
                 <label asp-for="Factory.Longitude">Enter Longitude</label>
                 <input type="text" class="form-control" asp-for="Factory.Longitude">
             </div>
-            <button type="submit" class="btn btn-primary">Register new factory</button>
+            <button type="submit" class="btn btn-primary">Update factory data</button>
         </form>
     </div>
 </div>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Generators.Helpers;
 using Lambada.Generators.ViewModels;
@@ -34,6 +35,30 @@ namespace Lambada.Generators.Services
             return await InsertAsync(lambadaUserModel);
         }
 
+        public async Task<bool> UpdateAsync(Factory factory)
+        {
+            var data = await SingleAsync(tableName, factory.FactoryId);
+
+            data.Name = factory.Name;
+            data.Description = factory.Description;
+            data.Latitude = factory.Latitude;
+            data.Longitude = factory.Longitude;
+            data.DeviceCount = factory.DeviceCount;
+            data.ItemsProduced = factory.ItemsProduced;
+
+            try
+            {
+                await UpdateAsync(data);
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<Factory> GetDataAsync(string factoryId)
         {
             var data = await SingleAsync(tableName, factoryId);
@@ -41,6 +66,8 @@ namespace Lambada.Generators.Services
         }
 
         public Task<bool> DeleteAsync(string factoryId) => base.DeleteAsync(new FactoryModel
-            {FactoryId = factoryId, PartitionKey = tableName});
+        {
+            FactoryId = factoryId, PartitionKey = tableName
+        });
     }
 }

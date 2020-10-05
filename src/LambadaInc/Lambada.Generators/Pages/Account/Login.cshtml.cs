@@ -1,24 +1,23 @@
 using System;
 using System.Threading.Tasks;
 using Lambada.Generators.Helpers;
+using Lambada.Generators.Infrastructure;
 using Lambada.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Lambada.Generators.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginPageModel : PageModel
+    public class LoginPageModel : GeneratorBasePageModel
     {
         private readonly IUserRepository userRepository;
         private readonly ILogger<LoginPageModel> logger;
 
         [BindProperty] public string Email { get; set; }
         [BindProperty] public string Password { get; set; }
-        [BindProperty, TempData] public string InfoText { get; set; }
         [BindProperty] public string ReturnUrl { get; set; }
         
         public LoginPageModel(IUserRepository userRepository, ILogger<LoginPageModel> logger)

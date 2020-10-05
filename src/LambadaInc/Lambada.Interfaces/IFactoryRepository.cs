@@ -8,6 +8,7 @@ namespace Lambada.Interfaces
     {
         Task<List<Factory>> SearchFactoryAsync(string query);
         Task<bool> AddAsync(Factory factory);
+        Task<bool> UpdateAsync(Factory factory);
         Task<Factory> GetDataAsync(string factoryId);
         Task<bool> DeleteAsync(string factoryId);
     }

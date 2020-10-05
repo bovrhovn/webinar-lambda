@@ -31,7 +31,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <span class="font-weight-bolder mr-1">Welcome @User.Identity.Name</span>
-                    <i class="fa fa-grip-lines-vertical"></i>       
+                    <i class="fa fa-grip-lines-vertical"></i>
                     <a class="text-dark ml-1" asp-page="/Account/Logout">logout</a>
                 }
                 else
@@ -44,6 +44,14 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
+        @if (IsSectionDefined("breadcrumb"))
+        {
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="float-right">
+                    @RenderSection("breadcrumb")
+                </nav>
+            </div>
+        }
         @RenderBody()
     </main>
 </div>

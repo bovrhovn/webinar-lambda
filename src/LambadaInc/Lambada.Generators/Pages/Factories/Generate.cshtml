@@ -1,0 +1,80 @@
+@page "{factoryId}"
+@model Lambada.Generators.Pages.Factories.GeneratePageModel
+
+@{
+    var factoryName = Model.Factory.Name;
+    ViewData["Title"] = "Generate devices for factory " + factoryName;
+}
+
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Overview">Factories</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Details" asp-route-factoryId="@Model.Factory.FactoryId">@factoryName</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Generate devices</li>
+    </ol>
+}
+
+<h1>Generate devices for factory @factoryName</h1>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+
+<div class="col-md-12 mb-3">
+    <form method="post">
+        <div class="form-group">
+            <input type="hidden" asp-for="Factory.FactoryId"/>
+            <label asp-for="Number">Enter device number</label>
+            <input type="text" class="form-control" asp-for="Number">
+        </div>
+        <button type="submit" class="btn btn-primary">Generate devices <i class="fa fa-cogs"></i></button>
+    </form>
+</div>
+
+@if (Model.Devices.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Device ID</th>
+            <th scope="col">Model</th>
+            <th scope="col">Generated</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var device in Model.Devices)
+        {
+            <tr>
+                <td>@device.FactoryDeviceId</td>
+                <td>@device.Model</td>
+                <td>@device.DateCreated</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <nav aria-label="Devices Count">
+        <ul class="pagination">
+            @if (Model.Devices.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Factories/Generate" asp-route-pageIndex="@(Model.Devices.PageIndex - 1)">Previous </a>
+                </li>
+            }
+            @if (Model.Devices.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Factories/Generate" asp-route-pageIndex="@(Model.Devices.PageIndex + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <p class="text-info">No devices registered! Generate them...</p>
+}

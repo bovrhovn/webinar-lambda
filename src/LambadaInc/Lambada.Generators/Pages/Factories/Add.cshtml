@@ -5,6 +5,16 @@
     ViewData["Title"] = "Add factory";
 }
 
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Overview">Factories</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Add new factory</li>
+    </ol>
+}
+
 <h1>
     Register new factory
 </h1>

@@ -1,22 +1,21 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Lambada.Base;
+using Lambada.Generators.Infrastructure;
 using Lambada.Generators.Interfaces;
 using Lambada.Generators.Options;
 using Lambada.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Lambada.Generators.Pages.Factories
 {
-    public class OverviewPageModel : PageModel
+    public class OverviewPageModel : GeneratorBasePageModel
     {
         private readonly IFactorySearchService searchService;
         private readonly ILogger<OverviewPageModel> logger;
         private readonly GeneratorOptions options;
-        [BindProperty, TempData] public string InfoText { get; set; }
         [BindProperty(SupportsGet = true)] public string Query { get; set; }
 
         public OverviewPageModel(IFactorySearchService searchService,
@@ -34,13 +33,14 @@ namespace Lambada.Generators.Pages.Factories
         {
             var list = await searchService.SearchAsync(Query);
             
-            logger.LogInformation("Estimated time of getting back result - " + list.Estimated);
+            logger.LogInformation($"Estimated time of getting back result - {list.Estimated}");
             
-            Factories = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(), pageIndex ?? 1, options.PageSize);
+            Factories = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(), pageIndex ?? 1, 
+                options.PageSize);
 
             var infoText = $"{list.Items.Count} factories loaded!";
-            
             InfoText = infoText;
+            
             logger.LogInformation(infoText);
         }
     }

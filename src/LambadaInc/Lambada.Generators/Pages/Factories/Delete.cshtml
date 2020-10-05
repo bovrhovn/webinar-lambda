@@ -6,6 +6,17 @@
     ViewData["Title"] = "Delete factory " + factoryName;
 }
 
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Overview">Factories</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Delete @factoryName</li>
+    </ol>
+}
+
+
 <h1>
     Delete factory @factoryName
 </h1>

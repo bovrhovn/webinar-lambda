@@ -2,12 +2,14 @@ using System;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Lambada.Generators.Pages.Factories
 {
+    [Authorize]
     public class DeletePageModel : PageModel
     {
         private readonly IFactoryRepository factoryRepository;

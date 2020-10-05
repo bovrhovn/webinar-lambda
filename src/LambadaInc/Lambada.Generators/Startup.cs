@@ -63,8 +63,11 @@ namespace Lambada.Generators
 
             app.UseStaticFiles();
             app.UseResponseCompression();
-            app.UseAuthentication();
             app.UseRouting();
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
         }
     }

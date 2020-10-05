@@ -1,13 +1,15 @@
 using System.Threading.Tasks;
+using Lambada.Generators.Infrastructure;
 using Lambada.Interfaces;
 using Lambada.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Lambada.Generators.Pages.Factories
 {
-    public class DetailsPageModel : PageModel
+    [Authorize]
+    public class DetailsPageModel : GeneratorBasePageModel
     {
         private readonly IFactoryRepository factoryRepository;
         private readonly ILogger<DetailsPageModel> logger;
@@ -19,7 +21,6 @@ namespace Lambada.Generators.Pages.Factories
         }
 
         [BindProperty] public Factory Factory { get; set; }
-        [BindProperty, TempData] public string InfoText { get; set; }
         
         public async Task OnGetAsync(string factoryId)
         {
