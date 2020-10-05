@@ -7,6 +7,7 @@ namespace Lambada.Interfaces
     public interface IFactoryRepository
     {
         Task<List<Factory>> SearchFactoryAsync(string query);
+        Task<List<Factory>> GetAllAsync();
         Task<bool> AddAsync(Factory factory);
         Task<bool> UpdateAsync(Factory factory);
         Task<Factory> GetDataAsync(string factoryId);

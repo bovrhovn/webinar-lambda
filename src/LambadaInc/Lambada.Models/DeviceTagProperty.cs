@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Lambada.Generators.ViewModels
+namespace Lambada.Models
 {
     public class DeviceTagProperty
     {

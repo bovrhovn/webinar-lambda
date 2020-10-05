@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Lambada.Generators.Helpers;
-using Lambada.Generators.ViewModels;
 using Lambada.Interfaces;
 using Lambada.Models;
-using Lambada.Services;
 
-namespace Lambada.Generators.Services
+namespace Lambada.Services
 {
     public class FactoryDataService : AzureTableDataRepository<FactoryModel>, IFactoryRepository
     {
@@ -19,6 +16,14 @@ namespace Lambada.Generators.Services
         public async Task<List<Factory>> SearchFactoryAsync(string query)
         {
             var lambadaUserModels = await FilterAsync("Name", query);
+            var list = new List<Factory>();
+            lambadaUserModels.ForEach(d => list.Add(d.ToFactory()));
+            return list;
+        }
+
+        public async Task<List<Factory>> GetAllAsync()
+        {
+            var lambadaUserModels = await FilterAsync();
             var list = new List<Factory>();
             lambadaUserModels.ForEach(d => list.Add(d.ToFactory()));
             return list;

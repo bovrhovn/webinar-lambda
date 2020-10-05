@@ -1,7 +1,7 @@
 using System;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Lambada.Generators.ViewModels
+namespace Lambada.Services
 {
     public class FactoryModel: TableEntity
     {

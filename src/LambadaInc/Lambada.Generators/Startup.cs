@@ -4,6 +4,7 @@ using Lambada.Generators.Interfaces;
 using Lambada.Generators.Options;
 using Lambada.Generators.Services;
 using Lambada.Interfaces;
+using Lambada.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
