@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lambada.Generators.Helpers;
@@ -24,6 +25,9 @@ namespace Lambada.Generators.Services
 
         public async Task<bool> AddAsync(Factory factory)
         {
+            factory.DateCreated = DateTime.Now;
+            factory.DeviceCount = 0;
+            factory.ItemsProduced = 0;
             var lambadaUserModel = factory.ToFactoryModel();
             lambadaUserModel.PartitionKey = tableName;
 
@@ -36,6 +40,7 @@ namespace Lambada.Generators.Services
             return data.ToFactory();
         }
 
-        public Task<bool> DeleteAsync(string factoryId) => base.DeleteAsync(new FactoryModel {FactoryId = factoryId, PartitionKey = tableName});
+        public Task<bool> DeleteAsync(string factoryId) => base.DeleteAsync(new FactoryModel
+            {FactoryId = factoryId, PartitionKey = tableName});
     }
 }
