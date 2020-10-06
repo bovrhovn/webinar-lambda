@@ -3,7 +3,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 
 namespace LambadaInc.Generators
@@ -22,7 +25,8 @@ namespace LambadaInc.Generators
 
         [FunctionName("HourlyData")]
         public async Task RunAsync([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
-            ILogger log)
+            ILogger log,
+            [SignalR(HubName = "messages")]IAsyncCollector<SignalRMessage> signalRMessages)
         {
             log.LogInformation($"Starting data generation at {DateTime.UtcNow}");
             var factories = await factoryRepository.GetAllAsync();
@@ -50,6 +54,15 @@ namespace LambadaInc.Generators
                         }
                     };
                     await factoryResultRepository.AddAsync(factoryDeviceResult);
+                    
+                    var message = $"Beer from {factoryDeviceResult.FactoryDeviceId} has been produces in {factoryDeviceResult.Quantity}.";
+                         
+                    await signalRMessages.AddAsync(
+                        new SignalRMessage 
+                        {
+                            Target = "broadcastMessage", 
+                            Arguments = new [] { message } 
+                        });
                 }
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
@@ -58,5 +71,11 @@ namespace LambadaInc.Generators
             log.LogInformation(
                 $"Data for all of the factories done in {stopWatch.ElapsedMilliseconds} ms ({stopWatch.Elapsed.Seconds} seconds)");
         }
+        
+        [FunctionName("negotiate")]
+        public static SignalRConnectionInfo Negotiate(
+            [HttpTrigger(AuthorizationLevel.Anonymous)]HttpRequest req,
+            [SignalRConnectionInfo(HubName = "messages")]SignalRConnectionInfo connectionInfo) =>
+            connectionInfo;
     }
 }

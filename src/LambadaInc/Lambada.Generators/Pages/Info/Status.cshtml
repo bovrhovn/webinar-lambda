@@ -1,0 +1,58 @@
+@page
+@model Lambada.Generators.Pages.Info.StatusPageModel
+
+@{
+    ViewData["Title"] = "Status page messages";
+}
+
+<h1>
+    Status page update about messages
+</h1>
+
+<div class="row">
+    <button type="button" id="btnClear" class="btn btn-sm btn-success mb-2 ">Clear messages</button>
+</div>
+
+<div id="messages" style="background-color: whitesmoke;"></div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/signalr.min.js"></script>
+    <script type="application/javascript">
+       document.addEventListener('DOMContentLoaded', function () {
+            const connection = new signalR.HubConnectionBuilder()
+                        .withUrl('/messages')
+                        .build();
+            bindConnectionMessage(connection);
+            connection.start()
+                      .then(() => onConnected(connection));
+            
+            $("#btnClear").click(function (event) {
+                            $("#messages").empty();
+                            event.preventDefault();
+            });
+            
+            function createMessageEntry(encodedMsg) {
+                            let entry = document.createElement('div');                            
+                            entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' + encodedMsg +'<div>';                          
+                            return entry;
+                        }
+            
+            function bindConnectionMessage(connection) {
+                  let messageCallback = function (message) {
+                                if (!message) return;                                
+                                var messageEntry = createMessageEntry(message);
+                                var messageBox = document.getElementById('messages');
+                                messageBox.appendChild(messageEntry);
+                                messageBox.scrollTop = messageBox.scrollHeight;
+                  };
+                  connection.on('broadcastMessage', messageCallback); 
+            }
+                            
+            function onConnected(connection) {
+                    console.log('connection started');
+                    connection.send('broadcastMessage', 'Connected to Azure SignalR service');                                          
+            }
+        });
+    </script>
+}

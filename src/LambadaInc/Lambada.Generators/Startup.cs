@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using Lambada.Base;
+using Lambada.Generators.Hubs;
 using Lambada.Generators.Interfaces;
 using Lambada.Generators.Options;
 using Lambada.Generators.Services;
@@ -53,7 +54,9 @@ namespace Lambada.Generators
             services.AddHttpContextAccessor();
 
             services.AddApplicationInsightsTelemetry();
-
+            
+            services.AddSignalR();
+            
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddPageRoute("/Info/Index", "");
@@ -74,7 +77,11 @@ namespace Lambada.Generators
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+                endpoints.MapHub<MessagesHub>("/messages");
+            });
         }
     }
 }
