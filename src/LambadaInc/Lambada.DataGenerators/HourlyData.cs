@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Models;
 using Lambada.Services;
@@ -15,18 +16,23 @@ namespace LambadaInc.Generators
     {
         [FunctionName("HourlyData")]
         public static async Task RunAsync([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, 
-            ILogger log,
-            CloudTable table)
+            ILogger log)
         {
             log.LogInformation($"Starting data generation at {DateTime.UtcNow}");
             var factories = await GetFactoriesAsync();
             log.LogInformation($"Loaded {factories.Count} factories");
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             foreach (var factory in factories)
             {
                 log.LogInformation($"Loading devices for factory {factory.Name}");
                 var devices = await GetDevicesAsync(factory.FactoryId);
+                log.LogInformation($"Device data started at {DateTime.Now} ");
                 AddRandomDataAsync(devices);
+                log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
+            stopWatch.Stop();
+            log.LogInformation($"Data for all of the factories done in {stopWatch.ElapsedMilliseconds} ms ({stopWatch.Elapsed.Seconds} seconds)");
         }
 
         /// <summary>
