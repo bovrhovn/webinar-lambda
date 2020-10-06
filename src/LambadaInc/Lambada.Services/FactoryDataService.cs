@@ -4,14 +4,17 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
+using Microsoft.Azure.Devices;
+using Newtonsoft.Json;
 
 namespace Lambada.Services
 {
     public class FactoryDataService : AzureTableDataRepository<FactoryModel>, IFactoryRepository
     {
-        public FactoryDataService(string connectionString, string tableName) : base(connectionString, tableName)
-        {
-        }
+        private readonly string deviceConnectionString;
+
+        public FactoryDataService(string connectionString, string tableName, string deviceConnectionString) : base(connectionString, tableName) 
+            => this.deviceConnectionString = deviceConnectionString;
 
         public async Task<List<Factory>> SearchFactoryAsync(string query)
         {
@@ -74,5 +77,29 @@ namespace Lambada.Services
         {
             FactoryId = factoryId, PartitionKey = tableName
         });
+
+        public async Task<List<FactoryDevice>> GetDevicesAsync(string factoryId)
+        {
+            var registryManager = RegistryManager.CreateFromConnectionString(deviceConnectionString);
+            var query = registryManager.CreateQuery(
+                $"SELECT * FROM devices WHERE tags.factory.id = '{factoryId}'", 100);
+            var list = new List<FactoryDevice>();
+            while (query.HasMoreResults)
+            {
+                var twins = await query.GetNextAsTwinAsync();
+                foreach (var twin in twins)
+                {
+                    var factory = JsonConvert.DeserializeObject<FactoryData>(twin.Tags.ToJson());
+                    list.Add(new FactoryDevice
+                    {
+                        FactoryId = factory.FactoryId,
+                        Model = factory.Model,
+                        FactoryDeviceId = twin.DeviceId
+                    });
+                }
+            }
+
+            return list;
+        }
     }
 }

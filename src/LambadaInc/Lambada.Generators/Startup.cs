@@ -28,16 +28,21 @@ namespace Lambada.Generators
             services.Configure<GeneratorOptions>(Configuration.GetSection("Generator"));
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
             services.Configure<StorageOptions>(Configuration.GetSection("StorageOptions"));
-            
+            services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
+
             services.AddScoped<IFactorySearchService, FactorySearchService>();
             services.AddScoped<IUserDataContext, UserDataContext>();
+            
             //repositories configuration
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
             services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
-            var factoryDataService = new FactoryDataService(storageSettings.ConnectionString, storageSettings.FactoriesTableName);
+
+            var iotSettings = Configuration.GetSection("IotHub").Get<IotOptions>();
+            var factoryDataService = new FactoryDataService(storageSettings.ConnectionString,
+                storageSettings.FactoriesTableName, iotSettings.ConnectionString);
             services.AddTransient<IFactoryRepository, FactoryDataService>(_ => factoryDataService);
-            
+
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
@@ -46,9 +51,9 @@ namespace Lambada.Generators
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddHttpContextAccessor();
-            
+
             services.AddApplicationInsightsTelemetry();
-            
+
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddPageRoute("/Info/Index", "");
@@ -65,10 +70,10 @@ namespace Lambada.Generators
             app.UseStaticFiles();
             app.UseResponseCompression();
             app.UseRouting();
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
         }
     }

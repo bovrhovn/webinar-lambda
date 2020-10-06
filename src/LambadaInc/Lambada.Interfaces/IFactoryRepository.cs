@@ -12,5 +12,6 @@ namespace Lambada.Interfaces
         Task<bool> UpdateAsync(Factory factory);
         Task<Factory> GetDataAsync(string factoryId);
         Task<bool> DeleteAsync(string factoryId);
+        Task<List<FactoryDevice>> GetDevicesAsync(string factoryId);
     }
 }

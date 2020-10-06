@@ -1,4 +1,4 @@
-namespace Lambada.Generators.Helpers
+namespace Lambada.Base
 {
     public static class Constants
     {
