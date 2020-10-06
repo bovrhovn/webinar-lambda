@@ -17,10 +17,10 @@ namespace LambadaInc.Generators
         {
             builder.Services.AddScoped<IFactoryResultRepository, FactoryDeviceResultService>(_=>
                 new FactoryDeviceResultService(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
-                    Environment.GetEnvironmentVariable("GenerateOptions:FactoryTableName")));
+                    Environment.GetEnvironmentVariable("GenerateOptions:ResultTableName")));
             builder.Services.AddScoped<IFactoryRepository, FactoryDataService>(_=>
                 new FactoryDataService(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
-                    Environment.GetEnvironmentVariable("GenerateOptions:ResultTableName"),
+                    Environment.GetEnvironmentVariable("GenerateOptions:FactoryTableName"),
                     Environment.GetEnvironmentVariable("GenerateOptions:DeviceConnectionString")));
             builder.Services.AddOptions<GenerateOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
