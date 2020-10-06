@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
@@ -35,33 +34,29 @@ namespace LambadaInc.Generators
                 log.LogInformation($"Loading devices for factory {factory.Name}");
                 var devices = await factoryRepository.GetDevicesAsync(factory.FactoryId);
                 log.LogInformation($"Device data started at {DateTime.Now} ");
-                await AddRandomDataAsync(devices);
+                //TODO: do optimization to concurrently execute below command
+                foreach (var device in devices)
+                {
+                    var factoryDeviceResult = new FactoryDeviceResult
+                    {
+                        FactoryDeviceId = device.FactoryDeviceId,
+                        DateCreated = DateTime.Now,
+                        Quantity = device.Model switch
+                        {
+                            "SuperBeerMaker" => 20,
+                            "CakeIsGoodBeerIsBetter" => 15,
+                            "VertigoBeer" => 10,
+                            _ => 30
+                        }
+                    };
+                    await factoryResultRepository.AddAsync(factoryDeviceResult);
+                }
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
 
             stopWatch.Stop();
             log.LogInformation(
                 $"Data for all of the factories done in {stopWatch.ElapsedMilliseconds} ms ({stopWatch.Elapsed.Seconds} seconds)");
-        }
-
-        private async Task AddRandomDataAsync(List<FactoryDevice> devices)
-        {
-            foreach (var device in devices)
-            {
-                var factoryDeviceResult = new FactoryDeviceResult
-                {
-                    FactoryDeviceId = device.FactoryDeviceId,
-                    DateCreated = DateTime.Now,
-                    Quantity = device.Model switch
-                    {
-                        "SuperBeerMaker" => 20,
-                        "CakeIsGoodBeerIsBetter" => 15,
-                        "VertigoBeer" => 10,
-                        _ => 30
-                    }
-                };
-                await factoryResultRepository.AddAsync(factoryDeviceResult);
-            }
         }
     }
 }

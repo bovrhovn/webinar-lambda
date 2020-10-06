@@ -22,40 +22,38 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-lg btn-alert float-right"
+        <a class="btn btn-success float-right mb-2"
            asp-page="/Factories/Edit"
            asp-route-factoryId="@Model.Factory.FactoryId">
-            Edit @factoryName?
+            <i class="fas fa-edit"></i> Edit @factoryName?
         </a>
     </div>
-</div>
-<div class="col-md-12">
-    <h1>
-        @factoryName
-        <small class="text-muted">Created @Model.Factory.DateCreated.ToShortDateString()</small>
-    </h1>
-    <p class="text-info">
-        @Model.Factory.Description
-    </p>
-    <p class="text-success">
-        Leveraging @Model.Factory.DeviceCount devices to handle @Model.Factory.ItemsProduced per month.
-    </p>
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-lg btn-alert float-right"
-               asp-page="/Factories/Generate"
-               asp-route-factoryId="@Model.Factory.FactoryId">
-                Generate devices for @factoryName?
-            </a>
-        </div>
-    </div>
-    <!-- create map to show latitude and longitude -->
     <div class="col-md-12">
-        <iframe width="500" height="400" frameborder="0" src="https://www.bing.com/maps/embed?h=400&w=500&cp=46.0503~14.504600000000018&lvl=11&typ=d&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
-        </iframe>
-        <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
-            <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=46.0503~14.504600000000018&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
-            <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=46.0503~14.504600000000018&amp;sty=r&amp;lvl=11&amp;rtp=~pos.46.0503_14.504600000000018____&amp;FORM=MBEDLD">Get Directions</a>
+        <a class="btn btn-lg btn-warning float-right"
+           asp-page="/Factories/Generate"
+           asp-route-factoryId="@Model.Factory.FactoryId">
+           <i class="fas fa-tablet-alt"></i> Generate devices for @factoryName?
+        </a>
+    </div>
+    <div class="col-md-12">
+        <h1>
+            @factoryName
+            <small class="text-muted">Created @Model.Factory.DateCreated.ToShortDateString()</small>
+        </h1>
+        <p class="text-info">
+            @Model.Factory.Description
+        </p>
+        <p class="text-success">
+            Leveraging @Model.Factory.DeviceCount devices to handle @Model.Factory.ItemsProduced per month.
+        </p>
+        <!-- create map to show latitude and longitude -->
+        <div class="col-md-12">
+            <iframe width="500" height="400" frameborder="0" src="https://www.bing.com/maps/embed?h=400&w=500&cp=46.0503~14.504600000000018&lvl=11&typ=d&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
+            </iframe>
+            <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
+                <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=46.0503~14.504600000000018&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
+                <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=46.0503~14.504600000000018&amp;sty=r&amp;lvl=11&amp;rtp=~pos.46.0503_14.504600000000018____&amp;FORM=MBEDLD">Get Directions</a>
+            </div>
         </div>
     </div>
 </div>

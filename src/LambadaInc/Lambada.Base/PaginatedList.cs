@@ -9,10 +9,14 @@ namespace Lambada.Base
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
 
+        public PaginatedList() : this(new List<T>(), 0, 1, 10)
+        {
+        }
+
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = (int) Math.Ceiling(count / (double) pageSize);
 
             this.AddRange(items);
         }

@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Lambada Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-replace-svg="nest"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -46,10 +47,12 @@
     <main role="main" class="pb-3">
         @if (IsSectionDefined("breadcrumb"))
         {
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="float-right">
-                    @RenderSection("breadcrumb")
-                </nav>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb" class="float-right">
+                        @RenderSection("breadcrumb")
+                    </nav>
+                </div>
             </div>
         }
         @RenderBody()

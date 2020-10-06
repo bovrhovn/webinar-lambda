@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lambada.Base;
-using Lambada.Generators.Helpers;
 using Lambada.Generators.Infrastructure;
 using Lambada.Generators.Options;
-using Lambada.Generators.ViewModels;
 using Lambada.Interfaces;
 using Lambada.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -124,7 +122,7 @@ namespace Lambada.Generators.Pages.Factories
             await factoryRepository.UpdateAsync(factory);
 
             //generate devices
-            return RedirectToPage("Index");
+            return RedirectToPage("/Factories/Details", new {factoryId = Factory.FactoryId});
         }
     }
 }

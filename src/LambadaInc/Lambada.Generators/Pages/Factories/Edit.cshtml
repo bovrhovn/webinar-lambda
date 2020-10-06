@@ -12,6 +12,9 @@
         <li class="breadcrumb-item">
             <a asp-page="/Factories/Overview">Factories</a>
         </li>
+        <li class="breadcrumb-item">
+            <a asp-page="/Factories/Details" asp-route-factoryId="@Model.Factory.FactoryId">Overview @factoryName</a>
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Editing factory @factoryName</li>
     </ol>
 }
