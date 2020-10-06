@@ -57,11 +57,15 @@ namespace Lambada.Generators.Pages.Factories
                 var twins = await query.GetNextAsTwinAsync();
                 foreach (var twin in twins)
                 {
-                    var factory = JsonConvert.DeserializeObject<FactoryData>(twin.Tags.ToJson());
+                    var tags = JsonConvert.DeserializeObject<Tags>(twin.Tags.ToJson());
+
+                    var factory = tags.FactoryData;
+
                     list.Add(new FactoryDevice
                     {
                         FactoryId = factory.FactoryId,
                         Model = factory.Model,
+                        DateCreated = DateTime.Parse(factory.Created),
                         FactoryDeviceId = twin.DeviceId
                     });
                 }
