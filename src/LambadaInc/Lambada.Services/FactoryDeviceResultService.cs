@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lambada.Services
 {
@@ -20,6 +22,34 @@ namespace Lambada.Services
             var list = new List<FactoryDeviceResult>();
             lambadaUserModels.ForEach(d => list.Add(d.ToFactoryDeviceResult()));
             return list;
+        }
+
+        public async Task<List<FactoryDeviceResult>> SearchHoursAgoAsync(int hours)
+        {
+            var table = TableClient;
+
+            var currentHours = DateTime.Now.AddHours(-hours);
+
+            var rangeQuery = new TableQuery<FactoryDeviceResultModel>()
+                .Where(TableQuery.GenerateFilterCondition(
+                    "DateCreated",
+                    QueryComparisons.GreaterThanOrEqual,
+                    currentHours.ToString(CultureInfo.InvariantCulture)));
+
+            TableContinuationToken token = null;
+            var list = new List<FactoryDeviceResultModel>();
+            do
+            {
+                var resultSegment =
+                    await table.ExecuteQuerySegmentedAsync(rangeQuery, token);
+                token = resultSegment.ContinuationToken;
+
+                list.AddRange(resultSegment.Results);
+                
+            } while (token != null);
+            var currentList = new List<FactoryDeviceResult>();
+            currentList.ForEach(d => list.Add(d.ToFactoryDeviceResultModel()));
+            return currentList;
         }
 
         public async Task<List<FactoryDeviceResult>> GetAllAsync()

@@ -4,31 +4,23 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
-using Microsoft.Extensions.Logging;
 
-namespace Lambada.Generators.Services
+namespace Lambada.Services
 {
     public class FactorySearchService : IFactorySearchService
     {
         private readonly IFactoryRepository factoryRepository;
-        private readonly ILogger<FactorySearchService> logger;
-
-        public FactorySearchService(IFactoryRepository factoryRepository, ILogger<FactorySearchService> logger)
-        {
-            this.factoryRepository = factoryRepository;
-            this.logger = logger;
-        }
+        
+        public FactorySearchService(IFactoryRepository factoryRepository) => this.factoryRepository = factoryRepository;
 
         public async Task<(List<SearchModel> Items, TimeSpan Estimated)> SearchAsync(string query)
         {
-            logger.LogInformation($"Starting with search with {query}");
             var stopwatch = Stopwatch.StartNew();
             stopwatch.Start();
             var factories = await factoryRepository.SearchFactoryAsync(query);
             stopwatch.Stop();
             var elapsed = stopwatch.Elapsed;
-            logger.LogInformation($"Search was finished in {elapsed.Milliseconds} ms.");
-            
+
             var list = new List<SearchModel>();
             factories.ForEach(d=>list.Add(new SearchModel
             {
