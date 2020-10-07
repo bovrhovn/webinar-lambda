@@ -1,7 +1,6 @@
 using System.IO.Compression;
 using Lambada.Base;
 using Lambada.Generators.Hubs;
-using Lambada.Generators.Interfaces;
 using Lambada.Generators.Options;
 using Lambada.Generators.Services;
 using Lambada.Interfaces;
@@ -15,6 +14,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace Lambada.Generators
 {
@@ -61,6 +61,8 @@ namespace Lambada.Generators
             {
                 options.Conventions.AddPageRoute("/Info/Index", "");
             });
+
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -76,11 +78,13 @@ namespace Lambada.Generators
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
                 endpoints.MapHub<MessagesHub>("/messages");
+                endpoints.MapHub<AlertHub>("/alerts");
             });
         }
     }

@@ -27,11 +27,15 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Factories/Overview">Factories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Info/Status">Device result status</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Info/Status">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Factories/RawData">Raw data</a>
                     </li>
                 </ul>
             </div>
             <form class="form-inline my-2 my-lg-0">
+                <div id="alertDiv" class="mr-2"></div>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <span class="font-weight-bolder mr-1">Welcome @User.Identity.Name</span>
@@ -69,8 +73,27 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/signalr.min.js"></script>
 @RenderSection("Scripts", required: false)
+<script type="application/javascript">
+       document.addEventListener('DOMContentLoaded', function () {
+            const connectionAlerts = new signalR.HubConnectionBuilder()
+                        .withUrl('/alerts')
+                        .build();
+            bindConnectionMessage(connectionAlerts);
+            connectionAlerts.start();
+            
+            function bindConnectionMessage(connection) {
+                  let messageCallback = function (message) {
+                                $("#alertDiv").empty();
+                                if (!message) return;
+                                let messageBox = document.getElementById('alertDiv');                                
+                                messageBox.innerHTML = "<a href='@Url.Page("/Info/Alerts")'><i class='fas fa-exclamation-triangle'></i></a>";                                
+                  };
+                  connection.on('alertMessage', messageCallback); 
+            }   
+        });
+    </script>
 <script> // apply custom changes to this script tag.
      @Html.Raw(JavaScriptSnippet.ScriptBody)
  </script>

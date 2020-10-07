@@ -1,6 +1,4 @@
-using Lambada.Interfaces;
-
-namespace Lambada.Generators.Interfaces
+namespace Lambada.Interfaces
 {
     public interface IFactorySearchService : ISearchService
     {
