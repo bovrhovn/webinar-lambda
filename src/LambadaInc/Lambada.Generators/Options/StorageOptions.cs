@@ -6,5 +6,6 @@
         public string Container { get; set; }
         public string UsersTableName { get; set; }
         public string FactoriesTableName { get; set; }
+        public string FactoryResultTableName { get; set; }
     }
 }

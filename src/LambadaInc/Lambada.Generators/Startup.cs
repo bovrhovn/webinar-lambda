@@ -31,6 +31,7 @@ namespace Lambada.Generators
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
 
             services.AddScoped<IFactorySearchService, FactorySearchService>();
+            services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();
             services.AddScoped<IUserDataContext, UserDataContext>();
             
             //email service configuration
@@ -47,6 +48,10 @@ namespace Lambada.Generators
                 storageSettings.FactoriesTableName, iotSettings.ConnectionString);
             services.AddTransient<IFactoryRepository, FactoryDataService>(_ => factoryDataService);
 
+            var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
+                storageSettings.FactoryResultTableName);
+            
+            services.AddTransient<IFactoryResultRepository, FactoryDeviceResultService>(_ => factoryDataResultService);
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
