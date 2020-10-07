@@ -33,6 +33,10 @@ namespace Lambada.Generators
             services.AddScoped<IFactorySearchService, FactorySearchService>();
             services.AddScoped<IUserDataContext, UserDataContext>();
             
+            //email service configuration
+            var sendGridSettings = Configuration.GetSection("SendGridOptions").Get<SendGridOptions>();
+            services.AddScoped<IEmailService, SendGridEmailSender>(_=>new SendGridEmailSender(sendGridSettings.ApiKey));
+            
             //repositories configuration
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
