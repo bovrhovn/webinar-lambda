@@ -15,18 +15,18 @@ namespace Lambada.Generators.Pages.Factories
     {
         private readonly IFactoryRepository factoryRepository;
         private readonly IFactoryResultRepository factoryResultRepository;
-        private readonly ISearchFactoryResultService searchFactoryResultService;
+        private readonly IFactorySearchResultService factorySearchResultService;
         private readonly ILogger<DetailsPageModel> logger;
         private readonly GeneratorOptions options;
         public RawDataPageModel(IFactoryRepository factoryRepository,
             IFactoryResultRepository factoryResultRepository,
             IOptions<GeneratorOptions> options,
-            ISearchFactoryResultService searchFactoryResultService,
+            IFactorySearchResultService factorySearchResultService,
             ILogger<DetailsPageModel> logger)
         {
             this.factoryRepository = factoryRepository;
             this.factoryResultRepository = factoryResultRepository;
-            this.searchFactoryResultService = searchFactoryResultService;
+            this.factorySearchResultService = factorySearchResultService;
             this.logger = logger;
             this.options = options.Value;
         }
@@ -45,7 +45,7 @@ namespace Lambada.Generators.Pages.Factories
 
             if (Hours != 0)
             {
-                var list = await searchFactoryResultService.SearchByHoursAsync(Hours,options.PageSize);
+                var list = await factorySearchResultService.SearchByHoursAsync(Hours,options.PageSize);
 
                 var message = $"Estimated time of getting back result - {list.Estimated}";
                 logger.LogInformation(message);

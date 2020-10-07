@@ -7,7 +7,7 @@ using Lambada.Models;
 
 namespace Lambada.Services
 {
-    public class FactorySearchResultService : ISearchFactoryResultService
+    public class FactorySearchResultService : IFactorySearchResultService
     {
         private readonly IFactoryResultRepository factoryResultRepository;
 
