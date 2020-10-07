@@ -31,13 +31,20 @@ namespace Lambada.Generators
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
             services.Configure<SearchServiceOptions>(Configuration.GetSection("SearchService"));
 
-            services.AddScoped<IFactorySearchService, FactorySearchService>();
+            var searchSettings = Configuration.GetSection("SearchService").Get<SearchServiceOptions>();
+            services.AddScoped<IFactorySearchService, FactoryAzureSearchService>(_ =>
+                new FactoryAzureSearchService(searchSettings.Name,
+                    searchSettings.Key, searchSettings.FactoriesIndex));
+            services.AddScoped<IFactorySearchResultService, FactoryAzureSearchResultService>(_ =>
+                new FactoryAzureSearchResultService(searchSettings.Name,
+                    searchSettings.Key, searchSettings.FactoryResultIndex));
             services.AddScoped<IUserDataContext, UserDataContext>();
-            
+
             //email service configuration
             var sendGridSettings = Configuration.GetSection("SendGridOptions").Get<SendGridOptions>();
-            services.AddScoped<IEmailService, SendGridEmailSender>(_=>new SendGridEmailSender(sendGridSettings.ApiKey));
-            
+            services.AddScoped<IEmailService, SendGridEmailSender>(
+                _ => new SendGridEmailSender(sendGridSettings.ApiKey));
+
             //repositories configuration
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
@@ -47,6 +54,10 @@ namespace Lambada.Generators
             var factoryDataService = new FactoryDataService(storageSettings.ConnectionString,
                 storageSettings.FactoriesTableName, iotSettings.ConnectionString);
             services.AddTransient<IFactoryRepository, FactoryDataService>(_ => factoryDataService);
+
+            var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
+                storageSettings.FactoryResultTableName);
+            services.AddTransient<IFactoryResultRepository, FactoryDeviceResultService>(_ => factoryDataResultService);
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
@@ -58,10 +69,10 @@ namespace Lambada.Generators
             services.AddHttpContextAccessor();
 
             services.AddApplicationInsightsTelemetry();
-            
+
             services.AddSignalR().AddAzureSignalR();
-            
-            services.AddRazorPages().AddRazorPagesOptions(options => 
+
+            services.AddRazorPages().AddRazorPagesOptions(options =>
                 options.Conventions.AddPageRoute("/Info/Index", ""));
 
             services.AddControllers();
@@ -80,7 +91,7 @@ namespace Lambada.Generators
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
