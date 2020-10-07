@@ -1,0 +1,487 @@
+Index: .idea/.idea.LambadaInc/.idea/codeStyles/codeStyleConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/codeStyles/codeStyleConfig.xml	(date 1601922563289)
++++ .idea/.idea.LambadaInc/.idea/codeStyles/codeStyleConfig.xml	(date 1601922563289)
+@@ -0,0 +1,5 @@
++<component name="ProjectCodeStyleConfiguration">
++  <state>
++    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
++  </state>
++</component>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/vcs.xml	(date 1601922563297)
++++ .idea/.idea.LambadaInc/.idea/vcs.xml	(date 1601922563297)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/encodings.xml	(date 1601922563309)
++++ .idea/.idea.LambadaInc/.idea/encodings.xml	(date 1601922563309)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise" />
++</project>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/riderModule.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/riderModule.iml	(date 1601922563317)
++++ .idea/.idea.LambadaInc/riderModule.iml	(date 1601922563317)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="RIDER_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$/../.." />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/misc.xml	(date 1601922563329)
++++ .idea/.idea.LambadaInc/.idea/misc.xml	(date 1601922563329)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="com.jetbrains.rider.android.RiderAndroidMiscFileCreationComponent">
++    <option name="ENSURE_MISC_FILE_EXISTS" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/indexLayout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/indexLayout.xml	(date 1601922563341)
++++ .idea/.idea.LambadaInc/.idea/indexLayout.xml	(date 1601922563341)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ContentModelUserStore">
++    <attachedFolders />
++    <explicitIncludes />
++    <explicitExcludes />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/riderModule.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/riderModule.iml	(date 1601922563349)
++++ ../../.idea/.idea.webinar-lambda.dir/riderModule.iml	(date 1601922563349)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="RIDER_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$/../.." />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/misc.xml	(date 1601922563361)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/misc.xml	(date 1601922563361)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="com.jetbrains.rider.android.RiderAndroidMiscFileCreationComponent">
++    <option name="ENSURE_MISC_FILE_EXISTS" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/modules.xml	(date 1601922563373)
++++ .idea/.idea.LambadaInc/.idea/modules.xml	(date 1601922563373)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/.idea.LambadaInc/riderModule.iml" filepath="$PROJECT_DIR$/.idea/.idea.LambadaInc/riderModule.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.idea.LambadaInc/.idea/projectSettingsUpdater.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/projectSettingsUpdater.xml	(date 1601922563381)
++++ .idea/.idea.LambadaInc/.idea/projectSettingsUpdater.xml	(date 1601922563381)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RiderProjectSettingsUpdater">
++    <option name="vcsConfiguration" value="2" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/indexLayout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/indexLayout.xml	(date 1601922563393)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/indexLayout.xml	(date 1601922563393)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ContentModelUserStore">
++    <attachedFolders />
++    <explicitIncludes />
++    <explicitExcludes />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/codeStyles/codeStyleConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/codeStyles/codeStyleConfig.xml	(date 1601922563405)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/codeStyles/codeStyleConfig.xml	(date 1601922563405)
+@@ -0,0 +1,5 @@
++<component name="ProjectCodeStyleConfiguration">
++  <state>
++    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
++  </state>
++</component>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/vcs.xml	(date 1601922563417)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/vcs.xml	(date 1601922563417)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/.gitignore	(date 1601922563433)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/.gitignore	(date 1601922563433)
+@@ -0,0 +1,13 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Rider ignored files
++/contentModel.xml
++/modules.xml
++/projectSettingsUpdater.xml
++/.idea.webinar-lambda.iml
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
++# Editor-based HTTP Client requests
++/httpRequests/
+Index: .idea/.idea.LambadaInc/.idea/contentModel.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.LambadaInc/.idea/contentModel.xml	(date 1601931728102)
++++ .idea/.idea.LambadaInc/.idea/contentModel.xml	(date 1601931728102)
+@@ -0,0 +1,245 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ContentModelStore">
++    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
++    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_LambadaInc.1097953548.00" t="ExcludeRecursive" />
++    <e p="$PROJECT_DIR$" t="IncludeFlat">
++      <e p="Lambada.Base" t="IncludeRecursive">
++        <e p="AzureStorageWorker.cs" t="Include" />
++        <e p="DateExtensions.cs" t="Include" />
++        <e p="IFormFile.cs" t="Include" />
++        <e p="IFormFileExtensions.cs" t="Include" />
++        <e p="Lambada.Base.csproj" t="IncludeRecursive" />
++        <e p="PaginatedList.cs" t="Include" />
++        <e p="PasswordHash.cs" t="Include" />
++        <e p="StringHelpers.cs" t="Include" />
++        <e p="UserDataContext.cs" t="Include" />
++        <e p="WebOptions.cs" t="Include" />
++        <e p="bin" t="ExcludeRecursive" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netstandard2.1" t="Include">
++              <e p="Lambada.Base.AssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="Lambada.DataGenerators" t="IncludeRecursive">
++        <e p=".gitignore" t="Include" />
++        <e p="HourlyData.cs" t="Include" />
++        <e p="Lambada.DataGenerators.csproj" t="IncludeRecursive" />
++        <e p="bin/Debug/netcoreapp3.1/bin" t="ExcludeRecursive" />
++        <e p="host.json" t="Include" />
++        <e p="local.settings.json" t="Include" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netcoreapp3.1" t="Include">
++              <e p="Lambada.DataGenerators.AssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="Lambada.Generators" t="IncludeRecursive">
++        <e p="Helpers" t="Include">
++          <e p="Constants.cs" t="Include" />
++          <e p="IdentityHelper.cs" t="Include" />
++          <e p="SelectListExtensions.cs" t="Include" />
++        </e>
++        <e p="Infrastructure" t="Include">
++          <e p="GeneratorBasePageModel.cs" t="Include" />
++        </e>
++        <e p="Interfaces" t="Include">
++          <e p="IFactorySearchService.cs" t="Include" />
++        </e>
++        <e p="Lambada.Generators.csproj" t="IncludeRecursive" />
++        <e p="Options" t="Include">
++          <e p="GeneratorOptions.cs" t="Include" />
++          <e p="IotOptions.cs" t="Include" />
++          <e p="SendGridOptions.cs" t="Include" />
++          <e p="StorageOptions.cs" t="Include" />
++        </e>
++        <e p="Pages" t="Include">
++          <e p="Account" t="Include">
++            <e p="Login.cshtml" t="Include" />
++            <e p="Login.cshtml.cs" t="Include" />
++            <e p="Logout.cshtml" t="Include" />
++            <e p="Logout.cshtml.cs" t="Include" />
++            <e p="Register.cshtml" t="Include" />
++            <e p="Register.cshtml.cs" t="Include" />
++          </e>
++          <e p="Error.cshtml" t="Include" />
++          <e p="Error.cshtml.cs" t="Include" />
++          <e p="Factories" t="Include">
++            <e p="Add.cshtml" t="Include" />
++            <e p="Add.cshtml.cs" t="Include" />
++            <e p="Delete.cshtml" t="Include" />
++            <e p="Delete.cshtml.cs" t="Include" />
++            <e p="Details.cshtml" t="Include" />
++            <e p="Details.cshtml.cs" t="Include" />
++            <e p="Edit.cshtml" t="Include" />
++            <e p="Edit.cshtml.cs" t="Include" />
++            <e p="Generate.cshtml" t="Include" />
++            <e p="Generate.cshtml.cs" t="Include" />
++            <e p="Overview.cshtml" t="Include" />
++            <e p="Overview.cshtml.cs" t="Include" />
++          </e>
++          <e p="Info" t="Include">
++            <e p="Index.cshtml" t="Include" />
++            <e p="Index.cshtml.cs" t="Include" />
++          </e>
++          <e p="Privacy.cshtml" t="Include" />
++          <e p="Privacy.cshtml.cs" t="Include" />
++          <e p="Shared" t="Include">
++            <e p="_Layout.cshtml" t="Include" />
++            <e p="_ValidationScriptsPartial.cshtml" t="Include" />
++          </e>
++          <e p="_ViewImports.cshtml" t="Include" />
++          <e p="_ViewStart.cshtml" t="Include" />
++        </e>
++        <e p="Program.cs" t="Include" />
++        <e p="Properties" t="Include">
++          <e p="launchSettings.json" t="Include" />
++        </e>
++        <e p="Services" t="Include">
++          <e p="FactorySearchService.cs" t="Include" />
++          <e p="UserRepository.cs" t="Include" />
++        </e>
++        <e p="Startup.cs" t="Include" />
++        <e p="ViewModels" t="Include">
++          <e p="Converters.cs" t="Include" />
++          <e p="LambadaUserModel.cs" t="Include" />
++          <e p="LoginViewModel.cs" t="Include" />
++        </e>
++        <e p="appsettings.Development.json" t="Include" />
++        <e p="appsettings.json" t="Include" />
++        <e p="bin" t="ExcludeRecursive" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netcoreapp3.1" t="Include">
++              <e p="Lambada.Generators.AssemblyInfo.cs" t="Include" />
++              <e p="Lambada.Generators.RazorAssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++        <e p="wwwroot" t="Include">
++          <e p="css" t="Include">
++            <e p="site.css" t="Include" />
++          </e>
++          <e p="favicon.ico" t="Include" />
++          <e p="images" t="Include">
++            <e p="beer-factory-unsplash.jpeg" t="Include" />
++          </e>
++          <e p="js" t="Include">
++            <e p="site.js" t="Include" />
++          </e>
++          <e p="lib" t="Include">
++            <e p="bootstrap" t="Include">
++              <e p="LICENSE" t="Include" />
++              <e p="dist" t="Include">
++                <e p="css" t="Include">
++                  <e p="bootstrap-grid.css" t="Include" />
++                  <e p="bootstrap-grid.css.map" t="Include" />
++                  <e p="bootstrap-grid.min.css" t="Include" />
++                  <e p="bootstrap-grid.min.css.map" t="Include" />
++                  <e p="bootstrap-reboot.css" t="Include" />
++                  <e p="bootstrap-reboot.css.map" t="Include" />
++                  <e p="bootstrap-reboot.min.css" t="Include" />
++                  <e p="bootstrap-reboot.min.css.map" t="Include" />
++                  <e p="bootstrap.css" t="Include" />
++                  <e p="bootstrap.css.map" t="Include" />
++                  <e p="bootstrap.min.css" t="Include" />
++                  <e p="bootstrap.min.css.map" t="Include" />
++                </e>
++                <e p="js" t="Include">
++                  <e p="bootstrap.bundle.js" t="Include" />
++                  <e p="bootstrap.bundle.js.map" t="Include" />
++                  <e p="bootstrap.bundle.min.js" t="Include" />
++                  <e p="bootstrap.bundle.min.js.map" t="Include" />
++                  <e p="bootstrap.js" t="Include" />
++                  <e p="bootstrap.js.map" t="Include" />
++                  <e p="bootstrap.min.js" t="Include" />
++                  <e p="bootstrap.min.js.map" t="Include" />
++                </e>
++              </e>
++            </e>
++            <e p="jquery" t="Include">
++              <e p="LICENSE.txt" t="Include" />
++              <e p="dist" t="Include">
++                <e p="jquery.js" t="Include" />
++                <e p="jquery.min.js" t="Include" />
++                <e p="jquery.min.map" t="Include" />
++              </e>
++            </e>
++            <e p="jquery-validation" t="Include">
++              <e p="LICENSE.md" t="Include" />
++              <e p="dist" t="Include">
++                <e p="additional-methods.js" t="Include" />
++                <e p="additional-methods.min.js" t="Include" />
++                <e p="jquery.validate.js" t="Include" />
++                <e p="jquery.validate.min.js" t="Include" />
++              </e>
++            </e>
++            <e p="jquery-validation-unobtrusive" t="Include">
++              <e p="LICENSE.txt" t="Include" />
++              <e p="jquery.validate.unobtrusive.js" t="Include" />
++              <e p="jquery.validate.unobtrusive.min.js" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="Lambada.Interfaces" t="IncludeRecursive">
++        <e p="IDataRepository.cs" t="Include" />
++        <e p="IEmailService.cs" t="Include" />
++        <e p="IFactoryRepository.cs" t="Include" />
++        <e p="ISearchService.cs" t="Include" />
++        <e p="IStorageWorker.cs" t="Include" />
++        <e p="IUserDataContext.cs" t="Include" />
++        <e p="IUserRepository.cs" t="Include" />
++        <e p="Lambada.Interfaces.csproj" t="IncludeRecursive" />
++        <e p="bin" t="ExcludeRecursive" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netstandard2.1" t="Include">
++              <e p="Lambada.Interfaces.AssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="Lambada.Models" t="IncludeRecursive">
++        <e p="DeviceTagProperty.cs" t="Include" />
++        <e p="Factory.cs" t="Include" />
++        <e p="FactoryDevice.cs" t="Include" />
++        <e p="FactoryDeviceResult.cs" t="Include" />
++        <e p="Lambada.Models.csproj" t="IncludeRecursive" />
++        <e p="LambadaUser.cs" t="Include" />
++        <e p="SearchModel.cs" t="Include" />
++        <e p="bin" t="ExcludeRecursive" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netstandard2.1" t="Include">
++              <e p="Lambada.Models.AssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="Lambada.Services" t="IncludeRecursive">
++        <e p="AzureTableDataRepository.cs" t="Include" />
++        <e p="FactoryDataService.cs" t="Include" />
++        <e p="FactoryDeviceResultModel.cs" t="Include" />
++        <e p="FactoryModel.cs" t="Include" />
++        <e p="Lambada.Services.csproj" t="IncludeRecursive" />
++        <e p="ModelConverter.cs" t="Include" />
++        <e p="bin" t="ExcludeRecursive" />
++        <e p="obj" t="ExcludeRecursive">
++          <e p="Debug" t="Include">
++            <e p="netstandard2.1" t="Include">
++              <e p="Lambada.Services.AssemblyInfo.cs" t="Include" />
++            </e>
++          </e>
++        </e>
++      </e>
++      <e p="LambadaInc.sln" t="IncludeFlat" />
++      <e p="packages" t="ExcludeRecursive" />
++    </e>
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../.idea/.idea.webinar-lambda.dir/.idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../.idea/.idea.webinar-lambda.dir/.idea/encodings.xml	(date 1601922563277)
++++ ../../.idea/.idea.webinar-lambda.dir/.idea/encodings.xml	(date 1601922563277)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise" />
++</project>
+\ No newline at end of file
