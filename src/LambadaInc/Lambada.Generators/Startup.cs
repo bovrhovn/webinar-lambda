@@ -89,7 +89,6 @@ namespace Lambada.Generators
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<MessagesHub>("/messages");
                 endpoints.MapHub<AlertHub>("/alerts");
             });
         }

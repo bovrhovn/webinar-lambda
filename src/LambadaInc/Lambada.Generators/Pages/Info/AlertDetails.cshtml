@@ -1,0 +1,12 @@
+@page "{alertUrl}"
+@model Lambada.Generators.Pages.Info.AlertDetailsPageModel
+
+@{
+    ViewData["Title"] = "Alert information";
+}
+
+<h1>
+    Oh no, something bad happened :(
+</h1>
+
+<img src="@Model.ImageUrl" class="img-fluid" alt="alert message"/>

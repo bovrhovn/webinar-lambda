@@ -69,15 +69,13 @@ namespace Lambada.Generators.Controllers
 
             foreach (var eventGridEvent in eventGridEvents)
             {
-                var sasUrl = eventGridEvent.Subject;
-
-                //TODO: store URL of the pic and show it later on - display only message
-                //LIMIT this to user
-                await hubContext.Clients.All.SendAsync("alertMessage", "important message");
+                var sasUrl = eventGridEvent.Data as JObject;
+                var imageUrl = sasUrl?["imgurl"]?.ToString();
+                await hubContext.Clients.All.SendAsync("alertMessage", imageUrl);
                 
                 //since this is an alert, send email to admin as well
                 await emailService.SendEmailAsync(generatorOptions.DefaultEmailFrom, generatorOptions.DefaultEmailTo,
-                    $"Alert has happened at {DateTime.Now}", sasUrl);
+                    $"Alert has happened at {DateTime.Now}", imageUrl);
             }
 
             return Ok($"Data was received at {DateTime.Now} and all clients has been notified.");

@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Lambada Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"/>
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-replace-svg="nest"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -72,6 +73,7 @@
 </footer>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="~/js/signalr.min.js"></script>
 @RenderSection("Scripts", required: false)
@@ -88,7 +90,10 @@
                                 $("#alertDiv").empty();
                                 if (!message) return;
                                 let messageBox = document.getElementById('alertDiv');                                
-                                messageBox.innerHTML = "<a href='@Url.Page("/Info/Alerts")'><i class='fas fa-exclamation-triangle'></i></a>";                                
+                                messageBox.innerHTML = "<a href='" +message +"'><i class='fas fa-exclamation-triangle'></i></a>";
+                                toastr.options.closeButton = true;
+                                toastr.options.onclick = function() { window.open(message,"_BLANK"); }
+                                toastr.info('Something important has happened! Click me to find more!');
                   };
                   connection.on('alertMessage', messageCallback); 
             }   

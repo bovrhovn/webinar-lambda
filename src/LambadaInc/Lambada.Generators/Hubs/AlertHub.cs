@@ -5,7 +5,7 @@ namespace Lambada.Generators.Hubs
 {
     public class AlertHub : Hub
     {
-        public Task BroadcastMessage(string message) =>
+        public Task AlertMessage(string message) =>
             Clients.All.SendAsync("alertMessage", message);
     }
 }
