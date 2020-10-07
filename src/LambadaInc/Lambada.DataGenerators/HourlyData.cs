@@ -71,11 +71,5 @@ namespace LambadaInc.Generators
             log.LogInformation(
                 $"Data for all of the factories done in {stopWatch.ElapsedMilliseconds} ms ({stopWatch.Elapsed.Seconds} seconds)");
         }
-        
-        [FunctionName("negotiate")]
-        public static SignalRConnectionInfo Negotiate(
-            [HttpTrigger(AuthorizationLevel.Anonymous)]HttpRequest req,
-            [SignalRConnectionInfo(HubName = "messages")]SignalRConnectionInfo connectionInfo) =>
-            connectionInfo;
     }
 }

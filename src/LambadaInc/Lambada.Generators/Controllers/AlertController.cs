@@ -1,5 +1,6 @@
 using System;
-using System.Net.WebSockets;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Lambada.Generators.Hubs;
 using Lambada.Generators.ViewModels;
@@ -12,43 +13,59 @@ using SubscriptionValidationEventData = Lambada.Generators.ViewModels.Subscripti
 
 namespace Lambada.Generators.Controllers
 {
-    //[Produces("application/json")]
+    [ApiController]
     [Route("notification")]
-    public class AlertController : Controller
+    public class AlertController : ControllerBase
     {
         private readonly IHubContext<AlertHub> hubContext;
 
-        public AlertController(IHubContext<AlertHub> hubContext)
+        public AlertController(IHubContext<AlertHub> hubContext) => this.hubContext = hubContext;
+
+        [Route("check")]
+        public IActionResult Health() => Ok($"I am alive {DateTime.Now}");
+
+        [HttpPost]
+        [Route("classic")]
+        public async Task<IActionResult> Classic()
         {
-            this.hubContext = hubContext;
+            var bodyStream = new StreamReader(HttpContext.Request.Body);
+            var receivedEvent = await bodyStream.ReadToEndAsync();
+            return Ok(receivedEvent);
         }
 
         [HttpPost]
         [Route("alert")]
-        public async Task<IActionResult> Add([FromBody]string receivedEvent)
+        public async Task<IActionResult> Add()
         {
+            var bodyStream = new StreamReader(HttpContext.Request.Body);
+            var receivedEvent = await bodyStream.ReadToEndAsync();
+            
+            if (HttpContext.Request.Headers.TryGetValue("Aeg-Event-Type", out var headerValues))
+            {
+                var validationHeaderValue = headerValues.FirstOrDefault();
+                if (validationHeaderValue != null && validationHeaderValue.Contains("SubscriptionValidation"))
+                {
+                    var events = JsonConvert.DeserializeObject<EventGridEvent[]>(receivedEvent);
+                    var code = events[0].Data as JObject;
+                    var eventData = code?.ToObject<SubscriptionValidationEventData>();
+                    var responseData =
+                        new SubscriptionValidationResponseData { ValidationResponse = eventData?.ValidationCode };
+                    return Ok(JsonConvert.SerializeObject(responseData));
+                }
+            }
+            
             var eventGridEvents = JsonConvert.DeserializeObject<EventGridEvent[]>(receivedEvent);
 
             foreach (var eventGridEvent in eventGridEvents)
             {
-                var dataObject = eventGridEvent.Data as JObject;
-
-                if (string.Equals(eventGridEvent.EventType, "Microsoft.EventGrid.SubscriptionValidationEvent",
-                                  StringComparison.OrdinalIgnoreCase))
-                {
-                    var eventData = dataObject?.ToObject<SubscriptionValidationEventData>();
-
-                    var responseData =
-                        new SubscriptionValidationResponseData { ValidationResponse = eventData?.ValidationCode };
-                    return Ok(responseData);
-                }
+                var sasUrl = eventGridEvent.Subject;
 
                 //TODO: store URL of the pic and show it later on - display only message
                 //LIMIT this to user
-                await hubContext.Clients.All.SendAsync("alertMessage", "1 message");
+                await hubContext.Clients.All.SendAsync("alertMessage", "important message");
             }
             
-            return Ok();
+            return Ok($"Data was received at {DateTime.Now} and all clients has been notified.");
         }
     }
 }

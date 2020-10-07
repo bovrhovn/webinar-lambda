@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
 
 namespace Lambada.Generators
 {
@@ -55,14 +54,12 @@ namespace Lambada.Generators
 
             services.AddApplicationInsightsTelemetry();
             
-            services.AddSignalR();
+            services.AddSignalR().AddAzureSignalR();
             
-            services.AddRazorPages().AddRazorPagesOptions(options =>
-            {
-                options.Conventions.AddPageRoute("/Info/Index", "");
-            });
+            services.AddRazorPages().AddRazorPagesOptions(options => 
+                options.Conventions.AddPageRoute("/Info/Index", ""));
 
-            services.AddMvc();
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
