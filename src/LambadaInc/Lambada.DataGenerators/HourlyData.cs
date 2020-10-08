@@ -3,9 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 
