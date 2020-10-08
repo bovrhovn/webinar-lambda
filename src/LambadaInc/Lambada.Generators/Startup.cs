@@ -29,29 +29,33 @@ namespace Lambada.Generators
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
             services.Configure<StorageOptions>(Configuration.GetSection("StorageOptions"));
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
+            services.Configure<CosmosDbOptions>(Configuration.GetSection("CosmosDb"));
 
             services.AddScoped<IFactorySearchService, FactorySearchService>();
             services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();
             services.AddScoped<IUserDataContext, UserDataContext>();
-            
+
             //email service configuration
             var sendGridSettings = Configuration.GetSection("SendGridOptions").Get<SendGridOptions>();
-            services.AddScoped<IEmailService, SendGridEmailSender>(_=>new SendGridEmailSender(sendGridSettings.ApiKey));
-            
+            services.AddScoped<IEmailService, SendGridEmailSender>(
+                _ => new SendGridEmailSender(sendGridSettings.ApiKey));
+
             //repositories configuration
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
             services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
 
-            var iotSettings = Configuration.GetSection("IotHub").Get<IotOptions>();
-            var factoryDataService = new FactoryDataService(storageSettings.ConnectionString,
-                storageSettings.FactoriesTableName, iotSettings.ConnectionString);
-            services.AddTransient<IFactoryRepository, FactoryDataService>(_ => factoryDataService);
+            //COSMODB settings
+            var iotHubSettings = Configuration.GetSection("IotHub").Get<IotOptions>();
+            var cosmosDbSettings = Configuration.GetSection("CosmosDb").Get<CosmosDbOptions>();
+            var factoryDataService = new FactoryDataServiceCosmoDb(cosmosDbSettings.ConnectionString,
+                cosmosDbSettings.Database, cosmosDbSettings.FactoryContainerName, iotHubSettings.ConnectionString);
+            services.AddTransient<IFactoryRepository, FactoryDataServiceCosmoDb>(_ => factoryDataService);
 
             var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
                 storageSettings.FactoryResultTableName);
-            
             services.AddTransient<IFactoryResultRepository, FactoryDeviceResultService>(_ => factoryDataResultService);
+
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
@@ -62,10 +66,10 @@ namespace Lambada.Generators
             services.AddHttpContextAccessor();
 
             services.AddApplicationInsightsTelemetry();
-            
+
             services.AddSignalR().AddAzureSignalR();
-            
-            services.AddRazorPages().AddRazorPagesOptions(options => 
+
+            services.AddRazorPages().AddRazorPagesOptions(options =>
                 options.Conventions.AddPageRoute("/Info/Index", ""));
 
             services.AddControllers();
@@ -84,7 +88,7 @@ namespace Lambada.Generators
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
