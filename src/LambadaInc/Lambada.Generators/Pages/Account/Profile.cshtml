@@ -10,10 +10,10 @@
 <div class="row">
     <div class="col-md-12 mb-3">
         <form method="post">
-             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Do you wanna be notified?</label>
-              </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="cbNotified" asp-for="NotificationsEnabled">
+                <label class="form-check-label" for="cbNotified">Do you wanna be notified?</label>
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
