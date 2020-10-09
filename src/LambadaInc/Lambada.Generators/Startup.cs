@@ -32,7 +32,7 @@ namespace Lambada.Generators
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
             services.Configure<CosmosDbOptions>(Configuration.GetSection("CosmosDb"));
             services.Configure<SearchServiceOptions>(Configuration.GetSection("SearchService"));
-            
+
             //services.AddScoped<IFactorySearchService, FactorySearchService>();
             //services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();
             var searchSettings = Configuration.GetSection("SearchService").Get<SearchServiceOptions>();
@@ -54,17 +54,21 @@ namespace Lambada.Generators
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
             services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
             services.AddScoped<INotificationService, AzureEmailNotificationService>(
-                _ => new AzureEmailNotificationService(storageSettings.ConnectionString,storageSettings.EmailQueueName));
-            
+                _ => new AzureEmailNotificationService(storageSettings.ConnectionString,
+                    storageSettings.EmailQueueName));
+
             //COSMODB settings
             var iotHubSettings = Configuration.GetSection("IotHub").Get<IotOptions>();
             var cosmosDbSettings = Configuration.GetSection("CosmosDb").Get<CosmosDbOptions>();
             var factoryDataService = new FactoryDataServiceCosmoDb(cosmosDbSettings.ConnectionString,
-                cosmosDbSettings.Database, 
-                cosmosDbSettings.FactoryContainerName, 
+                cosmosDbSettings.Database,
+                cosmosDbSettings.FactoryContainerName,
                 iotHubSettings.ConnectionString,
                 factoryAzureSearchService);
-            services.AddTransient<IFactoryRepository, FactoryDataServiceCosmoDb>(_ => factoryDataService);
+            services.AddScoped<IFactoryRepository, FactoryDataServiceCosmoDb>(_ => factoryDataService);
+            var alertService = new CosmosDbAlertService(cosmosDbSettings.ConnectionString, cosmosDbSettings.Database,
+                cosmosDbSettings.SubscriptionsContainerName);
+            services.AddScoped<IAlertService, CosmosDbAlertService>(_ => alertService);
 
             var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
                 storageSettings.FactoryResultTableName);
