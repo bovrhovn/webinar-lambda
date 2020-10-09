@@ -1,4 +1,5 @@
 using System;
+using Lambada.Base;
 using Lambada.Interfaces;
 using Lambada.Services;
 using LambadaInc.Generators;
@@ -18,6 +19,9 @@ namespace LambadaInc.Generators
             builder.Services.AddScoped<IFactoryResultRepository, FactoryDeviceResultService>(_=>
                 new FactoryDeviceResultService(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
                     Environment.GetEnvironmentVariable("GenerateOptions:ResultTableName")));
+            builder.Services.AddScoped<IStorageWorker, AzureStorageWorker>(_=>
+                new AzureStorageWorker(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
+                    Environment.GetEnvironmentVariable("StorageOptions:ContainerName")));
             builder.Services.AddScoped<IFactoryRepository, FactoryDataService>(_=>
                 new FactoryDataService(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
                     Environment.GetEnvironmentVariable("GenerateOptions:FactoryTableName"),

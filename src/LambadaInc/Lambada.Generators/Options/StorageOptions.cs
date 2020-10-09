@@ -7,5 +7,6 @@
         public string UsersTableName { get; set; }
         public string FactoriesTableName { get; set; }
         public string FactoryResultTableName { get; set; }
+        public string EmailQueueName { get; set; }
     }
 }

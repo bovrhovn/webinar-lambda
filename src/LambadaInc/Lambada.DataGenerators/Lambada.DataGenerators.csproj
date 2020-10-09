@@ -7,7 +7,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.Devices" Version="1.27.1" />
         <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.SendGrid" Version="3.0.0" />
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.SignalRService" Version="1.2.2" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.4" />
         <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" />
     </ItemGroup>
     <ItemGroup>
@@ -20,6 +22,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Lambada.Base\Lambada.Base.csproj" />
       <ProjectReference Include="..\Lambada.Models\Lambada.Models.csproj" />
       <ProjectReference Include="..\Lambada.Services\Lambada.Services.csproj" />
     </ItemGroup>

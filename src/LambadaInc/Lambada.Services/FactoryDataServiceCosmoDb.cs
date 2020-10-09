@@ -12,22 +12,21 @@ namespace Lambada.Services
     public class FactoryDataServiceCosmoDb : IFactoryRepository
     {
         private readonly string deviceConnectionString;
+        private readonly IFactorySearchService factorySearchService;
         private readonly Container container;
 
         public FactoryDataServiceCosmoDb(string connectionString, string databaseName, string containerName,
-            string deviceConnectionString)
+            string deviceConnectionString, IFactorySearchService factorySearchService)
         {
             this.deviceConnectionString = deviceConnectionString;
+            this.factorySearchService = factorySearchService;
             var cosmosClient = new CosmosClient(connectionString);
             var database = cosmosClient.GetDatabase(databaseName);
             container = database.GetContainer(containerName);
         }
 
-        public Task<List<Factory>> SearchFactoryAsync(string query)
-        {
-            //TODO: implementation of Azure Search
-            throw new System.NotImplementedException();
-        }
+        public Task<List<Factory>> SearchFactoryAsync(string query) => 
+            factorySearchService.SearchFactoryAsync(query);
 
         public async Task<List<Factory>> GetAllAsync()
         {
