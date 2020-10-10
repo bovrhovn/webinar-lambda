@@ -40,8 +40,9 @@
                 <div id="alertDiv" class="mr-2"></div>
                 @if (User.Identity.IsAuthenticated)
                 {
+                    <span class="font-weight-bolder mr-2">Welcome</span>
                     <a class="font-weight-bolder mr-1" asp-page="/Account/Profile">
-                        Welcome @User.Identity.Name
+                         @User.Identity.Name
                     </a>
                     <i class="fa fa-grip-lines-vertical"></i>
                     <a class="text-dark ml-1" asp-page="/Account/Logout">logout</a>

@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
@@ -9,6 +12,20 @@ using Newtonsoft.Json;
 
 namespace Lambada.Services
 {
+    public class CosmoFactory
+    {
+        [JsonProperty("id")] 
+        public string Id { get; set; }
+        public string FactoryId { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public int DeviceCount { get; set; }
+        public int ItemsProduced { get; set; }
+        public string DateCreated { get; set; }
+    }
+
     public class FactoryDataServiceCosmoDb : IFactoryRepository
     {
         private readonly string deviceConnectionString;
@@ -33,13 +50,26 @@ namespace Lambada.Services
             var query = "SELECT * FROM factories";
 
             var queryDefinition = new QueryDefinition(query);
-            var queryResultSetIterator = container.GetItemQueryIterator<Factory>(queryDefinition);
+            var queryResultSetIterator = container.GetItemQueryIterator<CosmoFactory>(queryDefinition);
 
             var list = new List<Factory>();
             while (queryResultSetIterator.HasMoreResults)
             {
-                var currentResultSet = await queryResultSetIterator.ReadNextAsync();
-                list.AddRange(currentResultSet);
+                var currentList = await queryResultSetIterator.ReadNextAsync();
+                foreach (var cosmo in currentList)
+                {
+                    list.Add(new Factory
+                    {
+                        FactoryId = cosmo.FactoryId,
+                        Name = cosmo.Name,
+                        Description = cosmo.Description,
+                        Latitude = cosmo.Latitude.ToString(CultureInfo.InvariantCulture),
+                        Longitude = cosmo.Longitude.ToString(CultureInfo.InvariantCulture),
+                        DateCreated = DateTime.Parse(cosmo.DateCreated),
+                        DeviceCount = cosmo.DeviceCount,
+                        ItemsProduced = cosmo.ItemsProduced
+                    });
+                }
             }
 
             return list;
@@ -47,8 +77,32 @@ namespace Lambada.Services
 
         public async Task<bool> AddAsync(Factory factory)
         {
-            var response = await container.CreateItemAsync(factory, new PartitionKey(factory.FactoryId));
-            return response.StatusCode == HttpStatusCode.OK;
+            var factoryId = Guid.NewGuid().ToString();
+            try
+            {
+                var cosmo = new CosmoFactory
+                {
+                    FactoryId = factoryId,
+                    Id = factoryId,
+                    Name = factory.Name,
+                    Description = factory.Description,
+                    Latitude = double.Parse(factory.Latitude),
+                    Longitude = double.Parse(factory.Longitude),
+                    DateCreated = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                    DeviceCount = factory.DeviceCount,
+                    ItemsProduced = factory.ItemsProduced
+                };
+
+                var response = await container.CreateItemAsync(cosmo,
+                    new PartitionKey(factoryId),
+                    new ItemRequestOptions {EnableContentResponseOnWrite = false});
+                return response.StatusCode == HttpStatusCode.OK;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public async Task<bool> UpdateAsync(Factory factory)
@@ -57,32 +111,54 @@ namespace Lambada.Services
             var response = await container.ReplaceItemAsync(
                 partitionKey: new PartitionKey(factoryId),
                 id: factoryId,
-                item: new
+                item: new CosmoFactory
                 {
-                    id = factoryId,
+                    Id = factoryId,
                     FactoryId = factory.FactoryId,
                     Description = factory.Description,
                     Name = factory.Name,
-                    Latitude = factory.Latitude,
-                    Longitude = factory.Longitude,
+                    Latitude = double.Parse(factory.Latitude),
+                    Longitude = double.Parse(factory.Longitude),
                     DeviceCount = factory.DeviceCount,
                     ItemsProduced = factory.ItemsProduced,
-                    DateCreated = factory.DateCreated,
+                    DateCreated = factory.DateCreated.ToString(CultureInfo.InvariantCulture),
                 });
             return response.StatusCode == HttpStatusCode.OK;
         }
 
         public async Task<Factory> GetDataAsync(string factoryId)
         {
-            var response = await container.ReadItemAsync<Factory>(
-                partitionKey: new PartitionKey(factoryId),
-                id: factoryId);
-            return response.Resource;
+            try
+            {
+                var response = await container.ReadItemAsync<CosmoFactory>(
+                    partitionKey: new PartitionKey(factoryId),
+                    id: factoryId);
+
+                var cosmo = response.Resource;
+                var factory = new Factory
+                {
+                    FactoryId = cosmo.FactoryId,
+                    Name = cosmo.Name,
+                    Description = cosmo.Description,
+                    Latitude = cosmo.Latitude.ToString(CultureInfo.InvariantCulture),
+                    Longitude = cosmo.Longitude.ToString(CultureInfo.InvariantCulture),
+                    DateCreated = DateTime.Parse(cosmo.DateCreated),
+                    DeviceCount = cosmo.DeviceCount,
+                    ItemsProduced = cosmo.ItemsProduced
+                };
+                
+                return factory;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public async Task<bool> DeleteAsync(string factoryId)
         {
-            var response = await container.DeleteItemAsync<Factory>(factoryId, new PartitionKey(factoryId));
+            var response = await container.DeleteItemAsync<CosmoFactory>(factoryId, new PartitionKey(factoryId));
             return response.StatusCode == HttpStatusCode.OK;
         }
 

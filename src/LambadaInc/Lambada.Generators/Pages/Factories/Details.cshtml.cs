@@ -21,14 +21,22 @@ namespace Lambada.Generators.Pages.Factories
         }
 
         [BindProperty] public Factory Factory { get; set; }
-        
+
         public async Task OnGetAsync(string factoryId)
         {
             logger.LogInformation($"Loading factory with ID {factoryId}");
             Factory = await factoryRepository.GetDataAsync(factoryId);
-            var infoText = $"Factory {Factory.Name} loaded";
-            InfoText = infoText;
-            logger.LogInformation(infoText);
+
+            if (Factory == null)
+            {
+                InfoText = "There has been an error getting back the data from database.";
+            }
+            else
+            {
+                var infoText = $"Factory {Factory.Name} loaded";
+                InfoText = infoText;
+                logger.LogInformation(infoText);
+            }
         }
     }
 }

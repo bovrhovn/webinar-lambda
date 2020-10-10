@@ -36,7 +36,7 @@ namespace Lambada.Services
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                var searchResult = await documentIndexClient.Documents.SearchAsync<Document>(query,
+                var searchResult = await documentIndexClient.Documents.SearchAsync<FactoryDeviceResult>(query,
                     searchParameters);
 
                 stopWatch.Stop();
@@ -65,7 +65,7 @@ namespace Lambada.Services
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                var searchResult = await documentIndexClient.Documents.SearchAsync<Document>("*",
+                var searchResult = await documentIndexClient.Documents.SearchAsync<FactoryDeviceResult>("*",
                     searchParameters);
 
                 stopWatch.Stop();
@@ -75,7 +75,7 @@ namespace Lambada.Services
                 return (list, stopWatch.Elapsed);
             }
 
-            private static List<SearchModel> GetSearchModels(DocumentSearchResult<Document> searchResult)
+            private static List<SearchModel> GetSearchModels(DocumentSearchResult<FactoryDeviceResult> searchResult)
             {
                 var list = new List<SearchModel>();
                 foreach (var currentDocumentSearchResult in searchResult.Results)
@@ -83,8 +83,8 @@ namespace Lambada.Services
                     var document = currentDocumentSearchResult.Document;
                     var currentDocumentResult = new SearchModel
                     {
-                        Title = document["Name"].ToString(),
-                        Description = document["Description"].ToString(),
+                        Title = document.FactoryDeviceId,
+                        Description = $"Device has {document.Quantity} items",
                         Route = "/Factories/RawData"
                     };
                     list.Add(currentDocumentResult);
