@@ -25,7 +25,7 @@ namespace Lambada.Services
             container = database.GetContainer(containerName);
         }
 
-        public Task<List<Factory>> SearchFactoryAsync(string query) => 
+        public Task<List<Factory>> SearchFactoryAsync(string query) =>
             factorySearchService.SearchFactoryAsync(query);
 
         public async Task<List<Factory>> GetAllAsync()
@@ -53,10 +53,22 @@ namespace Lambada.Services
 
         public async Task<bool> UpdateAsync(Factory factory)
         {
+            var factoryId = factory.FactoryId;
             var response = await container.ReplaceItemAsync(
-                partitionKey: new PartitionKey(factory.FactoryId),
-                id: factory.FactoryId,
-                item: factory);
+                partitionKey: new PartitionKey(factoryId),
+                id: factoryId,
+                item: new
+                {
+                    id = factoryId,
+                    FactoryId = factory.FactoryId,
+                    Description = factory.Description,
+                    Name = factory.Name,
+                    Latitude = factory.Latitude,
+                    Longitude = factory.Longitude,
+                    DeviceCount = factory.DeviceCount,
+                    ItemsProduced = factory.ItemsProduced,
+                    DateCreated = factory.DateCreated,
+                });
             return response.StatusCode == HttpStatusCode.OK;
         }
 

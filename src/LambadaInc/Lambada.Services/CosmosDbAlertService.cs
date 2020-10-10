@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
@@ -19,19 +21,39 @@ namespace Lambada.Services
 
         public async Task<bool> EnableOrDisableAlertsAsync(bool alertsOn, string userId)
         {
-            var userModel = new UserAlertModel {UserId = userId, On = alertsOn};
-            var response = await container.ReplaceItemAsync(partitionKey: new PartitionKey(userId),
-                id: userId,
-                item: userModel);
-            return response.StatusCode == HttpStatusCode.OK;
+            try
+            {
+                var response = await container.ReplaceItemAsync(partitionKey: new PartitionKey(userId),
+                    id: userId,
+                    item: new
+                    {
+                        On = alertsOn,
+                        UserId=userId,
+                        id=userId
+                    });
+                return response.StatusCode == HttpStatusCode.OK;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public async Task<bool> GetInfoAboutAlertsAsync(string userId)
         {
-            var response = await container.ReadItemAsync<UserAlertModel>(
-                partitionKey: new PartitionKey(userId),
-                id: userId);
-            return response.Resource.On;
+            try
+            {
+                var response = await container.ReadItemAsync<UserAlertModel>(
+                    partitionKey: new PartitionKey(userId),
+                    id: userId);
+                return response.Resource.On;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
         }
     }
 }
