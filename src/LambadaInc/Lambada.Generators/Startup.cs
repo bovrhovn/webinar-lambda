@@ -41,7 +41,8 @@ namespace Lambada.Generators
             services.AddScoped<IFactorySearchService, FactoryAzureSearchService>(_ => factoryAzureSearchService);
             services.AddScoped<ISearchFactoryResultService, FactoryAzureSearchResultService>(_ =>
                 new FactoryAzureSearchResultService(searchSettings.Name,
-                    searchSettings.Key, searchSettings.FactoryResultIndex));
+                    searchSettings.Key, 
+                    searchSettings.FactoryResultIndex));
             services.AddScoped<IUserDataContext, UserDataContext>();
 
             //email service configuration

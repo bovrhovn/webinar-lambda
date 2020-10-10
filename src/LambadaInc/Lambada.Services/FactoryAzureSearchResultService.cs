@@ -57,8 +57,7 @@ namespace Lambada.Services
                     OrderBy = new[] {"DateCreated desc"},
                     IncludeTotalResultCount = true,
                     SearchMode = SearchMode.Any,
-                    HighlightFields = new[] {"Name", "Description"},
-                    Filter = "Timestamp ge " + DateTime.UtcNow.AddHours(-hoursAgo),
+                    Filter = $"Timestamp gt datetime'{DateTime.Now.AddHours(-hoursAgo)}'",
                     Top = itemsCount
                 };
 

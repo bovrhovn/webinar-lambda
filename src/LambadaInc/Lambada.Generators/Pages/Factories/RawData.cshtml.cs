@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lambada.Base;
@@ -18,6 +19,7 @@ namespace Lambada.Generators.Pages.Factories
         private readonly ISearchFactoryResultService searchFactoryResultService;
         private readonly ILogger<DetailsPageModel> logger;
         private readonly GeneratorOptions options;
+
         public RawDataPageModel(IFactoryRepository factoryRepository,
             IFactoryResultRepository factoryResultRepository,
             IOptions<GeneratorOptions> options,
@@ -31,21 +33,27 @@ namespace Lambada.Generators.Pages.Factories
             this.options = options.Value;
         }
 
-        [BindProperty] public Factory Factory { get; set; }
-        [BindProperty(SupportsGet = true)] public int Hours { get; set; } = 0;
-        public PaginatedList<SearchModel> RawDataResults { get; set; }
-        
+        [BindProperty] public Factory Factory { get; set; } = new Factory();
+        [BindProperty(SupportsGet = true)] public int Hours { get; set; }
+
+        public PaginatedList<SearchModel> RawDataResults { get; set; } =
+            new PaginatedList<SearchModel>(new List<SearchModel>(), 0, 0, 50);
+
         public async Task OnGetAsync(string factoryId, int? pageIndex)
         {
             logger.LogInformation($"Loading factory with ID {factoryId}");
-            Factory = await factoryRepository.GetDataAsync(factoryId);
-            var infoText = $"Factory {Factory.Name} loaded";
-            InfoText = infoText;
-            logger.LogInformation(infoText);
+            var infoText = "Loading factory";
+            if (!string.IsNullOrEmpty(factoryId))
+            {
+                Factory = await factoryRepository.GetDataAsync(factoryId);
+                infoText = $"Factory {Factory.Name} loaded";
+                InfoText = infoText;
+                logger.LogInformation(infoText);
+            }
 
             if (Hours != 0)
             {
-                var list = await searchFactoryResultService.SearchByHoursAsync(Hours,options.PageSize);
+                var list = await searchFactoryResultService.SearchByHoursAsync(Hours, options.PageSize);
 
                 var message = $"Estimated time of getting back result - {list.Estimated}";
                 logger.LogInformation(message);

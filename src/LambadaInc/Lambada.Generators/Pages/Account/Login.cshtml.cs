@@ -26,6 +26,12 @@ namespace Lambada.Generators.Pages.Account
             this.logger = logger;
         }
 
+        public void OnGet(string returnUrl)
+        {
+            ReturnUrl = returnUrl;
+            logger.LogInformation($"Return url {returnUrl} has been set...");
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             logger.LogInformation("Logging in user {Email}");

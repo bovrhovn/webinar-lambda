@@ -83,6 +83,7 @@ namespace Lambada.Generators.Pages.Factories
         public async Task<IActionResult> OnPostAsync()
         {
             int counter = 0;
+            var factory = await factoryRepository.GetDataAsync(Factory.FactoryId);
             for (int currentItem = 0; currentItem < Number; currentItem++)
             {
                 var deviceId = Guid.NewGuid().ToString();
@@ -116,14 +117,11 @@ namespace Lambada.Generators.Pages.Factories
                 };
                 var patch = JsonConvert.SerializeObject(deviceTagProperty);
                 await registryManager.UpdateTwinAsync(deviceId, patch, twin.ETag);
+                factory.DeviceCount += 1;
+                await factoryRepository.UpdateAsync(factory);
             }
 
             InfoText = $"Added {counter} devices with default tags...";
-
-            //update device count
-            var factory = await factoryRepository.GetDataAsync(Factory.FactoryId);
-            factory.DeviceCount += 1;
-            await factoryRepository.UpdateAsync(factory);
 
             //generate devices
             return RedirectToPage("/Factories/Details", new {factoryId = Factory.FactoryId});

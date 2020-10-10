@@ -1,4 +1,4 @@
-@page "{factoryId}"
+@page "{factoryId?}"
 @model Lambada.Generators.Pages.Factories.RawDataPageModel
 
 @{
@@ -36,3 +36,53 @@
         <button type="submit" class="btn btn-primary">Search <i class="fas fa-search"></i></button>
     </form>
 </div>
+@if (Model.RawDataResults.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Short information</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var searchModel in Model.RawDataResults)
+        {
+            <tr>
+                <td>
+                    @searchModel.Title
+                </td>
+                <td>
+                    @searchModel.Description
+                </td>
+                <td>
+                    <a href="@searchModel.Route">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <nav aria-label="Devices Count">
+        <ul class="pagination">
+            @if (Model.RawDataResults.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Factories/RawData" asp-route-pageIndex="@(Model.RawDataResults.PageIndex - 1)">Previous </a>
+                </li>
+            }
+            @if (Model.RawDataResults.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Factories/RawData" asp-route-pageIndex="@(Model.RawDataResults.PageIndex + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <p class="text-info">No data found! Change query parameters.</p>
+}
