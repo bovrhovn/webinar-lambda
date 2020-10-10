@@ -1,0 +1,17 @@
+{
+  "name": "device",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+      "tsc": "tsc",
+      "device": "node dist/device.js"
+  },
+  "devDependencies": {
+      "@types/node": "^10.12.18",
+      "typescript": "^3.7.3"
+  },
+  "dependencies": {
+      "aws-iot-device-sdk-v2": "*"
+  }
+}
