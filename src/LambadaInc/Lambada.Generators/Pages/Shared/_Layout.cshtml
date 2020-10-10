@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Lambada Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
-    <link rel="stylesheet" href="https://ams1stor.blob.core.windows.net/pub/toastr.css"/>
+    <link rel="stylesheet" href="~/css/toastr.css"/>
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-replace-svg="nest"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -80,27 +80,35 @@
 <script type="text/javascript" src="~/js/signalr.min.js"></script>
 @RenderSection("Scripts", required: false)
 <script type="application/javascript">
-       document.addEventListener('DOMContentLoaded', function () {
-            const connectionAlerts = new signalR.HubConnectionBuilder()
-                        .withUrl('/alerts')
-                        .build();
-            bindConnectionMessage(connectionAlerts);
-            connectionAlerts.start();
-            
-            function bindConnectionMessage(connection) {
-                  let messageCallback = function (message) {
-                                $("#alertDiv").empty();
-                                if (!message) return;
-                                let messageBox = document.getElementById('alertDiv');                                
-                                messageBox.innerHTML = "<a href='" +message +"'><i class='fas fa-exclamation-triangle'></i></a>";
-                                toastr.options.closeButton = true;
-                                toastr.options.onclick = function() { window.open(message,"_BLANK"); }
-                                toastr.info('Something important has happened! Click me to find more!');
-                  };
-                  connection.on('alertMessage', messageCallback); 
-            }   
-        });
-    </script>
+    document.addEventListener('DOMContentLoaded', function () {
+         const connectionAlerts = new signalR.HubConnectionBuilder()
+                     .withUrl('/alerts')
+                     .build();
+         bindConnectionMessage(connectionAlerts);
+         connectionAlerts.start();
+
+         function bindConnectionMessage(connection) {
+             let messageCallback = function (message) {
+                 $("#alertDiv").empty();
+                 if (!message) return;
+                 // This is a tiny warning glyph next to Login link
+                 let messageBox = document.getElementById('alertDiv');
+                 messageBox.innerHTML = `<a href="${message}"><i class="fas fa-exclamation-triangle"></i></a>`;
+                 toastr.options = {
+                     closeButton: true,
+                     timeOut: 0,
+                     extendedTimeOut: 0,
+                     progressBar: true,
+                     onclick: function() { window.open(message, "_blank") }
+                 };
+                 toastr.warning(
+                     '<img src="images/bottle-shadow.png" height="300" />' +
+                     '<div class="message-body">Something important has happened!<br><br>Click me to find more!</div>');
+             };
+             connection.on('alertMessage', messageCallback);
+         }
+     });
+</script>
 <script> // apply custom changes to this script tag.
      @Html.Raw(JavaScriptSnippet.ScriptBody)
  </script>
