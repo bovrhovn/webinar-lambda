@@ -5,6 +5,7 @@ using Lambada.Generators.Options;
 using Lambada.Generators.Services;
 using Lambada.Interfaces;
 using Lambada.Services;
+using Lambada.Services.Lambada.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,9 +31,17 @@ namespace Lambada.Generators
             services.Configure<StorageOptions>(Configuration.GetSection("StorageOptions"));
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
             services.Configure<CosmosDbOptions>(Configuration.GetSection("CosmosDb"));
+            services.Configure<SearchServiceOptions>(Configuration.GetSection("SearchService"));
 
-            services.AddScoped<IFactorySearchService, FactorySearchService>();
-            services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();
+            //services.AddScoped<IFactorySearchService, FactorySearchService>();
+            //services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();
+            var searchSettings = Configuration.GetSection("SearchService").Get<SearchServiceOptions>();
+            var factoryAzureSearchService = new FactoryAzureSearchService(searchSettings.Name,
+                searchSettings.Key, searchSettings.FactoriesIndex);
+            services.AddScoped<IFactorySearchService, FactoryAzureSearchService>(_ => factoryAzureSearchService);
+            services.AddScoped<ISearchFactoryResultService, FactoryAzureSearchResultService>(_ =>
+                new FactoryAzureSearchResultService(searchSettings.Name,
+                    searchSettings.Key, searchSettings.FactoryResultIndex));
             services.AddScoped<IUserDataContext, UserDataContext>();
 
             //email service configuration
@@ -44,13 +53,22 @@ namespace Lambada.Generators
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
             var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
             services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
+            services.AddScoped<INotificationService, AzureEmailNotificationService>(
+                _ => new AzureEmailNotificationService(storageSettings.ConnectionString,
+                    storageSettings.EmailQueueName));
 
             //COSMODB settings
             var iotHubSettings = Configuration.GetSection("IotHub").Get<IotOptions>();
             var cosmosDbSettings = Configuration.GetSection("CosmosDb").Get<CosmosDbOptions>();
             var factoryDataService = new FactoryDataServiceCosmoDb(cosmosDbSettings.ConnectionString,
-                cosmosDbSettings.Database, cosmosDbSettings.FactoryContainerName, iotHubSettings.ConnectionString);
-            services.AddTransient<IFactoryRepository, FactoryDataServiceCosmoDb>(_ => factoryDataService);
+                cosmosDbSettings.Database,
+                cosmosDbSettings.FactoryContainerName,
+                iotHubSettings.ConnectionString,
+                factoryAzureSearchService);
+            services.AddScoped<IFactoryRepository, FactoryDataServiceCosmoDb>(_ => factoryDataService);
+            var alertService = new CosmosDbAlertService(cosmosDbSettings.ConnectionString, cosmosDbSettings.Database,
+                cosmosDbSettings.SubscriptionsContainerName);
+            services.AddScoped<IAlertService, CosmosDbAlertService>(_ => alertService);
 
             var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
                 storageSettings.FactoryResultTableName);

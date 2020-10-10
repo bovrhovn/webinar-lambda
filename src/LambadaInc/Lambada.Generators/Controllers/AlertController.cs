@@ -22,13 +22,15 @@ namespace Lambada.Generators.Controllers
     {
         private readonly IHubContext<AlertHub> hubContext;
         private readonly IEmailService emailService;
+        private readonly INotificationService notificationService;
         private readonly GeneratorOptions generatorOptions;
 
         public AlertController(IHubContext<AlertHub> hubContext, IEmailService emailService,
-            IOptions<GeneratorOptions> generatorOptions)
+            IOptions<GeneratorOptions> generatorOptions, INotificationService notificationService)
         {
             this.hubContext = hubContext;
             this.emailService = emailService;
+            this.notificationService = notificationService;
             this.generatorOptions = generatorOptions.Value;
         }
 
@@ -74,8 +76,16 @@ namespace Lambada.Generators.Controllers
                 await hubContext.Clients.All.SendAsync("alertMessage", imageUrl);
                 
                 //since this is an alert, send email to admin as well
-                await emailService.SendEmailAsync(generatorOptions.DefaultEmailFrom, generatorOptions.DefaultEmailTo,
-                    $"Alert has happened at {DateTime.Now}", imageUrl);
+                // await emailService.SendEmailAsync(generatorOptions.DefaultEmailFrom, 
+                //     generatorOptions.DefaultEmailTo,
+                //     $"Alert has happened at {DateTime.Now}", imageUrl);
+                await notificationService.NotifyAsync(new EmailModel
+                {
+                    To = generatorOptions.DefaultEmailTo,
+                    From = generatorOptions.DefaultEmailFrom,
+                    Subject = $"Alert has happened at {DateTime.Now}",
+                    Content = "This is the problem - " + imageUrl
+                });
             }
 
             return Ok($"Data was received at {DateTime.Now} and all clients has been notified.");

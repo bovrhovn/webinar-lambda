@@ -6,5 +6,6 @@ namespace Lambada.Generators.Options
         public string Database { get; set; }
         public string FactoryContainerName { get; set; }
         public string FactoryStatsContainerName { get; set; }
+        public string SubscriptionsContainerName { get; set; }
     }
 }

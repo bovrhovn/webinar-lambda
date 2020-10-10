@@ -37,6 +37,7 @@ namespace LambadaInc.Generators
                 var devices = await factoryRepository.GetDevicesAsync(factory.FactoryId);
                 log.LogInformation($"Device data started at {DateTime.Now} ");
                 //TODO: do optimization to concurrently execute below command
+                int counter = 0;
                 foreach (var device in devices)
                 {
                     var factoryDeviceResult = new FactoryDeviceResult
@@ -61,7 +62,14 @@ namespace LambadaInc.Generators
                             Target = "broadcastMessage", 
                             Arguments = new [] { message } 
                         });
+                    counter++;
                 }
+                
+                log.LogInformation($"Updating factory with new numbers");
+                factory.ItemsProduced += counter;
+                await factoryRepository.UpdateAsync(factory);
+                log.LogInformation($"Factory {factory.Name} current items {factory.ItemsProduced}");
+                
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
 

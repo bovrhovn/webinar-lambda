@@ -31,5 +31,8 @@ namespace Lambada.Services
             }));
             return (list, elapsed);
         }
+
+        public Task<List<Factory>> SearchFactoryAsync(string query) => 
+            factoryRepository.SearchFactoryAsync(query);
     }
 }
