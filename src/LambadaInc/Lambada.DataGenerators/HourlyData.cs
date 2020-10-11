@@ -6,6 +6,7 @@ using Lambada.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace LambadaInc.Generators
 {
@@ -24,8 +25,12 @@ namespace LambadaInc.Generators
         [FunctionName("HourlyData")]
         public async Task RunAsync([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
             ILogger log,
+            [CosmosDB(databaseName: "lambadadb", collectionName: "stats",
+                ConnectionStringSetting = "GenerateOptions:CosmosDbConnectionString")]
+            IAsyncCollector<FactoryStatModel> stats,
             [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
-            IAsyncCollector<SignalRMessage> signalRMessages)
+            IAsyncCollector<SignalRMessage> signalRMessages,
+            [Queue("lambada-emails")]IAsyncCollector<CloudQueueMessage> messages)
         {
             log.LogInformation($"Starting data generation at {DateTime.UtcNow}");
             var factories = await factoryRepository.GetAllAsync();
@@ -73,7 +78,13 @@ namespace LambadaInc.Generators
                 factory.ItemsProduced += counter;
                 await factoryRepository.UpdateAsync(factory);
                 log.LogInformation($"Factory {factory.Name} current items {factory.ItemsProduced}");
-                log.LogInformation($"$We earned {moneyExpected} €");
+                log.LogInformation($"We earned {moneyExpected} €");
+                await stats.AddAsync(new FactoryStatModel
+                {
+                    FactoryId = factory.FactoryId,
+                    DateCreated = DateTime.Now,
+                    EarnedMoney = moneyExpected
+                });
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
 

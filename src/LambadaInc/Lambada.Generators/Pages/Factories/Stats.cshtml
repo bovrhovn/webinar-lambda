@@ -1,17 +1,52 @@
 @page
 @using Microsoft.Extensions.Options
 @using Lambada.Generators.Options
+@using System.Globalization
 @model Lambada.Generators.Pages.Factories.StatsPageModel
 
 @inject IOptions<SignalrOptions> SignalROptions
 
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "Stats";
 }
 
 <h1>
-    Information about messages via realtime
+    Information about stats
 </h1>
+
+<form method="get">
+    <div class="form-group">
+        <label for="selectFactory">Choose factory and see stats</label>
+        <select class="form-control" asp-for="FactoryId" id="selectFactory"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Get data</button>
+</form>
+
+@if (Model.StatModels == null)
+{
+    <p>No data avaible for Factory with ID @Model.FactoryId</p>
+}
+else
+{
+    if (Model.StatModels.Any())
+    {
+        <table class="table table-light">
+            <tr>
+                <td>Value</td>
+                <td>Created on</td>
+            </tr>
+            @foreach (var statModel in Model.StatModels)
+            {
+                <tr>
+                    <td>
+                        @statModel.EarnedMoney
+                    </td>
+                    <td>@statModel.DateCreated.ToString(CultureInfo.InvariantCulture)</td>
+                </tr>
+            }
+        </table>
+    }
+}
 
 <div id="messages"></div>
 
@@ -19,24 +54,41 @@
 {
     <script type="application/javascript">
     document.addEventListener('DOMContentLoaded', function () {
-             const connectionMessages = new signalR.HubConnectionBuilder()
-                         .withUrl(@SignalROptions.Value.StatsUrl)
-                         .build();
-             showMessage(connectionMessages);
-             connectionMessages.start()
-                     .then(() => console.log('connected!'))
-                     .catch(console.error);
-    
-             function showMessage(connection) {
-                 let messageCallback = function (message) {
-                     $("#messages").empty();
-                     if (!message) return;
-                     
-                     let messageBox = document.getElementById('messages');
-                     messageBox.innerHTML = "";                     
-                 };
-                 connection.on('broadcastMessage', messageCallback);
-             }
-         });
+                const statsConnection = new signalR.HubConnectionBuilder()
+                            .withUrl('@SignalROptions.Value.StatsUrl')
+                            .build();
+                bindConnectionMessage(statsConnection);
+                statsConnection.start()
+                          .then(() => onConnected(statsConnection))
+                          .catch(console.error);
+                
+                $("#btnClear").click(function (event) {
+                                $("#messages").empty();
+                                event.preventDefault();
+                });
+                
+                function createMessageEntry(encodedMsg) {
+                                let entry = document.createElement('div');                            
+                                entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' + encodedMsg +'<div>';                          
+                                return entry;
+                            }
+                
+                function bindConnectionMessage(connection) {
+                      let messageCallback = function (message) {
+                                    if (!message) return;                                
+                                    let messageEntry = createMessageEntry(message);
+                                    let messageBox = document.getElementById('messages');
+                                    messageBox.appendChild(messageEntry);
+                                    messageBox.scrollTop = messageBox.scrollHeight;
+                      };
+                      connection.on('broadcastMessage', messageCallback); 
+                }
+                                
+                function onConnected(connection) {
+                        console.log('connection started');
+                        connection.send('broadcastMessage', 'Connected to Azure SignalR service for stats retrieving');                                          
+                }
+            });
     </script>
 }
+

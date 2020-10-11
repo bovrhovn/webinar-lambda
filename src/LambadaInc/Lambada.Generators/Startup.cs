@@ -71,6 +71,9 @@ namespace Lambada.Generators
             var alertService = new CosmosDbAlertService(cosmosDbSettings.ConnectionString, cosmosDbSettings.Database,
                 cosmosDbSettings.SubscriptionsContainerName);
             services.AddScoped<IAlertService, CosmosDbAlertService>(_ => alertService);
+            var statsService = new StatsCosmosDbService(cosmosDbSettings.ConnectionString, cosmosDbSettings.Database,
+                cosmosDbSettings.FactoryStatsContainerName);
+            services.AddScoped<IStatsService, StatsCosmosDbService>(_ => statsService);
 
             var factoryDataResultService = new FactoryDeviceResultService(storageSettings.ConnectionString,
                 storageSettings.FactoryResultTableName);
