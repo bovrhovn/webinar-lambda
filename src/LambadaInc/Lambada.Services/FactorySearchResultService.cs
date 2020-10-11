@@ -33,15 +33,13 @@ namespace Lambada.Services
             return (list, elapsed);
         }
 
-        public async Task<(List<SearchModel> Items, TimeSpan Estimated)> SearchByHoursAsync(int hoursAgo,
-            int itemsCount = 50)
+        public async Task<(List<SearchModel> Items, long ItemCount)> SearchByHoursAsync(int hoursAgo)
         {
             var stopwatch = Stopwatch.StartNew();
             stopwatch.Start();
             var factories = await factoryResultRepository.SearchHoursAgoAsync(hoursAgo);
             stopwatch.Stop();
-            var elapsed = stopwatch.Elapsed;
-
+            Debug.WriteLine($"Search was retrieved for {stopwatch.Elapsed.Milliseconds} ms.");
             var list = new List<SearchModel>();
             factories.ForEach(d => list.Add(new SearchModel
             {
@@ -50,8 +48,8 @@ namespace Lambada.Services
                 ImageUrl = "",
                 Route = "/Factories/RawData"
             }));
-            var currentList = list.GetRange(0, itemsCount);
-            return (currentList, elapsed);
+            
+            return (list, factories.Count);
         }
     }
 }

@@ -2,19 +2,21 @@
 @model Lambada.Generators.Pages.Account.ProfilePageModel
 
 @{
-    ViewData["Title"] = "Profile";
+    var userFullName = Model.CurrentUser.FullName;
+    ViewData["Title"] = $"Profile {userFullName}";
 }
 
-<h1>All about @Model.CurrentUser.FullName</h1>
+<h1>All about @userFullName</h1>
 
 <div class="row">
     <div class="col-md-12 mb-3">
         <form method="post">
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="cbNotified" asp-for="NotificationsEnabled">
-                <label class="form-check-label" for="cbNotified">Do you wanna be notified?</label>
+                <label class="form-check-label" for="cbNotified">Do you wanna be notified about everything?</label>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
+    <div id="money"></div>
 </div>

@@ -1,9 +1,8 @@
-@page "{factoryId?}"
+@page 
 @model Lambada.Generators.Pages.Factories.RawDataPageModel
 
 @{
-    var factoryName = Model.Factory.Name;
-    ViewData["Title"] = "Raw data overview " + factoryName;
+    ViewData["Title"] = "Raw data overview";
 }
 
 @section breadcrumb
@@ -13,16 +12,13 @@
             <a asp-page="/Factories/Overview">Factories</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-page="/Factories/Details" asp-route-factoryId="@Model.Factory.FactoryId">@factoryName</a>
-        </li> 
-        <li class="breadcrumb-item">
             <a asp-page="/Info/Status">Status in real-time</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Raw data @factoryName</li>
+        <li class="breadcrumb-item active" aria-current="page">Raw data</li>
     </ol>
 }
 
-<h1>Raw data @factoryName</h1>
+<h1>Raw data</h1>
 <p class="text-success font-weight-bold text-xl-left">
     @Model.InfoText
 </p>

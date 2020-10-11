@@ -46,19 +46,25 @@ namespace Lambada.Services
                 return (list, stopWatch.Elapsed);
             }
 
-            public async Task<(List<SearchModel> Items, TimeSpan Estimated)> SearchByHoursAsync(int hoursAgo,
-                int itemsCount = 50)
+            public async Task<(List<SearchModel> Items, long ItemCount)> SearchByHoursAsync(int hoursAgo)
             {
                 var documentIndexClient =
                     serviceClient.Indexes.GetClient(factoriesResultIndex);
 
+                // var dateCompare = DateTime.Now.AddHours(-hoursAgo);
+                // var searchParameters = new SearchParameters
+                // {
+                //     OrderBy = new[] {"DateCreated desc"},
+                //     IncludeTotalResultCount = true,
+                //     SearchMode = SearchMode.Any,
+                //     Filter = $"Timestamp gt {dateCompare.ToUniversalTime()}",
+                //     Top = itemsCount
+                // };
                 var searchParameters = new SearchParameters
                 {
                     OrderBy = new[] {"DateCreated desc"},
                     IncludeTotalResultCount = true,
-                    SearchMode = SearchMode.Any,
-                    Filter = $"Timestamp gt datetime'{DateTime.Now.AddHours(-hoursAgo)}'",
-                    Top = itemsCount
+                    SearchMode = SearchMode.Any
                 };
 
                 var stopWatch = new Stopwatch();
@@ -68,10 +74,12 @@ namespace Lambada.Services
                     searchParameters);
 
                 stopWatch.Stop();
+                
+                Debug.WriteLine(stopWatch.Elapsed);
 
                 var list = GetSearchModels(searchResult);
 
-                return (list, stopWatch.Elapsed);
+                return (list, searchResult.Count ?? 0);
             }
 
             private static List<SearchModel> GetSearchModels(DocumentSearchResult<FactoryDeviceResult> searchResult)

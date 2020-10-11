@@ -10,7 +10,7 @@ namespace LambadaInc.Generators
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo NegotiateSignalr(
             [HttpTrigger(AuthorizationLevel.Anonymous)]HttpRequest req,
-            [SignalRConnectionInfo(HubName = "messages")]SignalRConnectionInfo connectionInfo) =>
-            connectionInfo;
+            [SignalRConnectionInfo(HubName = "messages",ConnectionStringSetting = "AzureSignalRConnectionString")]
+            SignalRConnectionInfo connectionInfo) => connectionInfo;
     }
 }

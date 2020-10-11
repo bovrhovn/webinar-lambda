@@ -32,6 +32,7 @@ namespace Lambada.Generators
             services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
             services.Configure<CosmosDbOptions>(Configuration.GetSection("CosmosDb"));
             services.Configure<SearchServiceOptions>(Configuration.GetSection("SearchService"));
+            services.Configure<SignalrOptions>(Configuration.GetSection("SignalrOptions"));
 
             //services.AddScoped<IFactorySearchService, FactorySearchService>();
             //services.AddScoped<ISearchFactoryResultService, FactorySearchResultService>();

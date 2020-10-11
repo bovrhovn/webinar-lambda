@@ -1,12 +1,42 @@
 @page
+@using Microsoft.Extensions.Options
+@using Lambada.Generators.Options
 @model Lambada.Generators.Pages.Factories.StatsPageModel
 
+@inject IOptions<SignalrOptions> SignalROptions
+
 @{
-    ViewData["Title"] = "Stats about profit";
+    ViewData["Title"] = "Messages";
 }
 
 <h1>
-    Information about statistics via realtime
+    Information about messages via realtime
 </h1>
 
-TODO: here goes stats
+<div id="messages"></div>
+
+@section Scripts
+{
+    <script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+             const connectionMessages = new signalR.HubConnectionBuilder()
+                         .withUrl(@SignalROptions.Value.StatsUrl)
+                         .build();
+             showMessage(connectionMessages);
+             connectionMessages.start()
+                     .then(() => console.log('connected!'))
+                     .catch(console.error);
+    
+             function showMessage(connection) {
+                 let messageCallback = function (message) {
+                     $("#messages").empty();
+                     if (!message) return;
+                     
+                     let messageBox = document.getElementById('messages');
+                     messageBox.innerHTML = "";                     
+                 };
+                 connection.on('broadcastMessage', messageCallback);
+             }
+         });
+    </script>
+}

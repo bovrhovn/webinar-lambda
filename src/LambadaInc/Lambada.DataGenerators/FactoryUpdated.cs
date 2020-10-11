@@ -17,7 +17,7 @@ namespace LambadaInc.Generators
                 LeaseCollectionName = "leases",
                 CreateLeaseCollectionIfNotExists = true)]
             IReadOnlyList<Document> input,
-            [SignalR(HubName = "stats")] IAsyncCollector<SignalRMessage> signalRMessages,
+            [SignalR(HubName = "messages",ConnectionStringSetting = "AzureSignalRConnectionString")] IAsyncCollector<SignalRMessage> signalRMessages,
             ILogger log)
         {
             log.LogInformation("Started to react");
@@ -35,7 +35,7 @@ namespace LambadaInc.Generators
                         new SignalRMessage
                         {
                             Target = "broadcastMessage",
-                            Arguments = new[] {message}
+                            Arguments = new object[] {message}
                         });
                 }
             }

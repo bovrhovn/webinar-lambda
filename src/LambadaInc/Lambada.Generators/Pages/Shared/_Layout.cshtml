@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/toastr.css"/>
-    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" 
+            data-auto-replace-svg="nest"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -28,7 +29,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Factories/Overview">Factories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Info/Status">Results</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Info/Status">Messages</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Factories/RawData">Raw data</a>
@@ -86,7 +87,9 @@
                      .withUrl('/alerts')
                      .build();
          bindConnectionMessage(connectionAlerts);
-         connectionAlerts.start();
+         connectionAlerts.start()
+                        .then(() => console.log('connected to alert messages!'))
+                        .catch(console.error);
 
          function bindConnectionMessage(connection) {
              let messageCallback = function (message) {
@@ -103,14 +106,14 @@
                      onclick: function() { window.open(message, "_blank") }
                  };
                  toastr.warning(
-                     '<img src="images/bottle-shadow.png" height="300" />' +
+                     '<img src="images/bottle-shadow.png" height="300"  alt="alert"/>' +
                      '<div class="message-body">Something important has happened!<br><br>Click me to find more!</div>');
              };
              connection.on('alertMessage', messageCallback);
          }
      });
 </script>
-<script> // apply custom changes to this script tag.
+<script type="text/javascript"> 
      @Html.Raw(JavaScriptSnippet.ScriptBody)
  </script>
 </body>

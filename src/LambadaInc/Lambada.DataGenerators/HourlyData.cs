@@ -24,7 +24,8 @@ namespace LambadaInc.Generators
         [FunctionName("HourlyData")]
         public async Task RunAsync([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
             ILogger log,
-            [SignalR(HubName = "messages")]IAsyncCollector<SignalRMessage> signalRMessages)
+            [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
+            IAsyncCollector<SignalRMessage> signalRMessages)
         {
             log.LogInformation($"Starting data generation at {DateTime.UtcNow}");
             var factories = await factoryRepository.GetAllAsync();
@@ -36,8 +37,9 @@ namespace LambadaInc.Generators
                 log.LogInformation($"Loading devices for factory {factory.Name}");
                 var devices = await factoryRepository.GetDevicesAsync(factory.FactoryId);
                 log.LogInformation($"Device data started at {DateTime.Now} ");
-                //TODO: do optimization to concurrently execute below command
                 int counter = 0;
+                float moneyExpected = 0;
+                const float beerCost = 2.5f;
                 foreach (var device in devices)
                 {
                     var factoryDeviceResult = new FactoryDeviceResult
@@ -53,23 +55,25 @@ namespace LambadaInc.Generators
                         }
                     };
                     await factoryResultRepository.AddAsync(factoryDeviceResult);
-                    
-                    var message = $"Beer from {factoryDeviceResult.FactoryDeviceId} has been produces in {factoryDeviceResult.Quantity}.";
-                         
+
+                    var message =
+                        $"Beer from {factoryDeviceResult.FactoryDeviceId} has been produces in {factoryDeviceResult.Quantity}.";
+
                     await signalRMessages.AddAsync(
-                        new SignalRMessage 
+                        new SignalRMessage
                         {
-                            Target = "broadcastMessage", 
-                            Arguments = new [] { message } 
+                            Target = "broadcastMessage",
+                            Arguments = new object[] {message}
                         });
                     counter++;
+                    moneyExpected += factoryDeviceResult.Quantity * beerCost;
                 }
-                
+
                 log.LogInformation($"Updating factory with new numbers");
                 factory.ItemsProduced += counter;
                 await factoryRepository.UpdateAsync(factory);
                 log.LogInformation($"Factory {factory.Name} current items {factory.ItemsProduced}");
-                
+                log.LogInformation($"$We earned {moneyExpected} €");
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
 

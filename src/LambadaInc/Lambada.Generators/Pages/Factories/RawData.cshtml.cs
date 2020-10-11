@@ -9,6 +9,7 @@ using Lambada.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Lambada.Generators.Pages.Factories
 {
@@ -33,33 +34,26 @@ namespace Lambada.Generators.Pages.Factories
             this.options = options.Value;
         }
 
-        [BindProperty] public Factory Factory { get; set; } = new Factory();
         [BindProperty(SupportsGet = true)] public int Hours { get; set; }
 
         public PaginatedList<SearchModel> RawDataResults { get; set; } =
             new PaginatedList<SearchModel>(new List<SearchModel>(), 0, 0, 50);
 
-        public async Task OnGetAsync(string factoryId, int? pageIndex)
+        public async Task OnGetAsync(int? pageIndex)
         {
-            logger.LogInformation($"Loading factory with ID {factoryId}");
-            var infoText = "Loading factory";
-            if (!string.IsNullOrEmpty(factoryId))
-            {
-                Factory = await factoryRepository.GetDataAsync(factoryId);
-                infoText = $"Factory {Factory.Name} loaded";
-                InfoText = infoText;
-                logger.LogInformation(infoText);
-            }
-
+            logger.LogInformation($"Loading data...");
+            var infoText = "Loading results for device data";
+           
             if (Hours != 0)
             {
-                var list = await searchFactoryResultService.SearchByHoursAsync(Hours, options.PageSize);
+                var list = await searchFactoryResultService.SearchByHoursAsync(Hours);
 
-                var message = $"Estimated time of getting back result - {list.Estimated}";
+                var message = $"Estimated item count of getting back result - {list.ItemCount}";
                 logger.LogInformation(message);
 
-                RawDataResults = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(), pageIndex ?? 1,
-                    options.PageSize);
+                RawDataResults = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(), 
+                    pageIndex ?? 1,
+                    (int) list.ItemCount);
                 InfoText = infoText;
             }
         }
