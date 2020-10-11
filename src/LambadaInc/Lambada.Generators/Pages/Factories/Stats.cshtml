@@ -78,10 +78,10 @@ else
                                     if (!message) return;                                
                                     let messageEntry = createMessageEntry(message);
                                     let messageBox = document.getElementById('messages');
-                                    messageBox.appendChild(messageEntry);
+                                    messageBox.appendChild("money is flowing <b>" + messageEntry + "</b> €");
                                     messageBox.scrollTop = messageBox.scrollHeight;
                       };
-                      connection.on('broadcastMessage', messageCallback); 
+                      connection.on('stats', messageCallback); 
                 }
                                 
                 function onConnected(connection) {
