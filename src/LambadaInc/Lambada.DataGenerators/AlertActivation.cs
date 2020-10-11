@@ -34,7 +34,7 @@ namespace LambadaInc.Generators
                 log.LogInformation($"Sending email to {user.Email}");
                 var emailModel =new EmailModel
                 {
-                    From = "system@beer.me",
+                    From = "bojan@vrhovnik.net",
                     To = user.Email,
                     Content = $"There has been an error. Check {Environment.NewLine}{eventGridEvent.Data}",
                     Subject = "System error message from beer system"

@@ -43,19 +43,16 @@ namespace Lambada.Generators.Pages.Factories
         {
             logger.LogInformation($"Loading data...");
             var infoText = "Loading results for device data";
-           
-            if (Hours != 0)
-            {
-                var list = await searchFactoryResultService.SearchByHoursAsync(Hours);
+            
+            var list = await searchFactoryResultService.SearchByHoursAsync(Hours);
 
-                var message = $"Estimated item count of getting back result - {list.ItemCount}";
-                logger.LogInformation(message);
+            var message = $"Estimated item count of getting back result - {list.ItemCount}";
+            logger.LogInformation(message);
 
-                RawDataResults = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(), 
-                    pageIndex ?? 1,
-                    (int) list.ItemCount);
-                InfoText = infoText;
-            }
+            RawDataResults = PaginatedList<SearchModel>.Create(list.Items.AsQueryable(),
+                pageIndex ?? 1,
+                (int) list.ItemCount);
+            InfoText = infoText;
         }
     }
 }

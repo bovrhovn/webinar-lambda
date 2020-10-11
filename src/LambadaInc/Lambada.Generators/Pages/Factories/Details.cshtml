@@ -36,13 +36,6 @@
         </a>
     </div>
     <div class="col-md-12">
-        <a class="btn btn-lg btn-warning float-right"
-           asp-page="/Factories/RawData"
-           asp-route-factoryId="@Model.Factory.FactoryId">
-           <i class="fas fa-tablet-alt"></i> Generate devices for @factoryName?
-        </a>
-    </div>
-    <div class="col-md-12">
         <h1>
             @factoryName
             <small class="text-muted">Created @Model.Factory.DateCreated.ToShortDateString()</small>

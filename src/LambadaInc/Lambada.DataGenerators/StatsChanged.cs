@@ -68,7 +68,7 @@ namespace LambadaInc.Generators
                         log.LogInformation($"Sending email to {user.Email}");
                         var emailModel = new EmailModel
                         {
-                            From = "system@beer.me",
+                            From = "bojan@vrhovnik.net",
                             To = user.Email,
                             Content = $"Stats has changed - money added {money}",
                             Subject = "Factory has earned more money"
