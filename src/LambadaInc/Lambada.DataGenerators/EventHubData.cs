@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
@@ -71,7 +70,7 @@ namespace LambadaInc.Generators
                             new SignalRMessage
                             {
                                 Target = "broadcastMessage",
-                                Arguments = new[] {message}
+                                Arguments = new object[] {message}
                             });
                         counter++;
                     }

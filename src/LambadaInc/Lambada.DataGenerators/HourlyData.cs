@@ -30,7 +30,7 @@ namespace LambadaInc.Generators
             IAsyncCollector<FactoryStatModel> stats,
             [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
             IAsyncCollector<SignalRMessage> signalRMessages,
-            [Queue("lambada-emails")]IAsyncCollector<CloudQueueMessage> messages)
+            [Queue("lambada-emails")] IAsyncCollector<CloudQueueMessage> messages)
         {
             log.LogInformation($"Starting data generation at {DateTime.UtcNow}");
             var factories = await factoryRepository.GetAllAsync();
@@ -85,6 +85,14 @@ namespace LambadaInc.Generators
                     DateCreated = DateTime.Now,
                     EarnedMoney = moneyExpected
                 });
+
+                await signalRMessages.AddAsync(
+                    new SignalRMessage
+                    {
+                        Target = "stats",
+                        Arguments = new object[] {moneyExpected}
+                    });
+
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
             }
 

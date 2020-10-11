@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
@@ -31,7 +29,7 @@ namespace LambadaInc.Generators
                 LeaseCollectionName = "leases",
                 CreateLeaseCollectionIfNotExists = true)]
             IReadOnlyList<Document> input,
-            [SignalR(HubName = "stats", ConnectionStringSetting = "AzureSignalRConnectionString")]
+            [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
             IAsyncCollector<SignalRMessage> signalRMessages,
             [Queue("lambada-emails")] IAsyncCollector<CloudQueueMessage> messages,
             ILogger log)
@@ -59,9 +57,17 @@ namespace LambadaInc.Generators
                             Target = "broadcastMessage",
                             Arguments = new object[] {message}
                         });
+                    
 
                     var money = document.GetPropertyValue<double>("EarnedMoney");
+                    await signalRMessages.AddAsync(
+                        new SignalRMessage
+                        {
+                            Target = "stats",
+                            Arguments = new object[] {money}
+                        });
                     log.LogInformation($"Retrieved {users.Count} users");
+                    
                     foreach (var currentUserId in users)
                     {
                         var user = await userRepository.GetUserDataByIdAsync(currentUserId);
