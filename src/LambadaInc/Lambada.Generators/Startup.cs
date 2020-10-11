@@ -2,7 +2,6 @@ using System.IO.Compression;
 using Lambada.Base;
 using Lambada.Generators.Hubs;
 using Lambada.Generators.Options;
-using Lambada.Generators.Services;
 using Lambada.Interfaces;
 using Lambada.Services;
 using Lambada.Services.Lambada.Services;
@@ -53,7 +52,8 @@ namespace Lambada.Generators
 
             //repositories configuration
             var storageSettings = Configuration.GetSection("StorageOptions").Get<StorageOptions>();
-            var userRepository = new UserRepository(storageSettings.ConnectionString, storageSettings.UsersTableName);
+            var userRepository = new UserRepository(storageSettings.ConnectionString, 
+                storageSettings.UsersTableName);
             services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
             services.AddScoped<INotificationService, AzureEmailNotificationService>(
                 _ => new AzureEmailNotificationService(storageSettings.ConnectionString,

@@ -11,7 +11,7 @@ namespace LambadaInc.Generators
     {
         [FunctionName("FactoryUpdated")]
         public async Task RunAsync([CosmosDBTrigger(
-                databaseName: "lambada",
+                databaseName: "lambadadb",
                 collectionName: "factories",
                 ConnectionStringSetting = "GenerateOptions:CosmosDbConnectionString",
                 LeaseCollectionName = "leases",
@@ -26,11 +26,16 @@ namespace LambadaInc.Generators
             {
                 log.LogInformation($"Documents modified {input.Count}");
                 log.LogInformation($"First document Id {input[0].Id}");
-                //TODO: do stats calculations
-                //react on stats change and do an update via Signalr
+                string message = $"There was {input.Count} modified documents";
+                await signalRMessages.AddAsync(
+                    new SignalRMessage
+                    {
+                        Target = "broadcastMessage",
+                        Arguments = new object[] {message}
+                    });
                 foreach (var document in input)
                 {
-                    string message = ""; //construct message
+                    message = $"Factory {document.GetPropertyValue<string>("Name")} has been updated. Check factories for an update."; 
                     await signalRMessages.AddAsync(
                         new SignalRMessage
                         {

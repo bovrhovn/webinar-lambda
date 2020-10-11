@@ -1,6 +1,6 @@
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Lambada.Generators.ViewModels
+namespace Lambada.Models
 {
     public class LambadaUserModel : TableEntity
     {

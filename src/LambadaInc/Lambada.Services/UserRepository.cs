@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lambada.Base;
-using Lambada.Generators.ViewModels;
 using Lambada.Interfaces;
 using Lambada.Models;
-using Lambada.Services;
 
-namespace Lambada.Generators.Services
+namespace Lambada.Services
 {
     public class UserRepository : AzureTableDataRepository<LambadaUserModel>, IUserRepository
     {
@@ -31,6 +29,12 @@ namespace Lambada.Generators.Services
             user.Password = PasswordHash.CreateHash(user.Password);
             var lambadaUser = await InsertAsync(user);
             return lambadaUser;
+        }
+
+        public async Task<LambadaUser> GetUserDataByIdAsync(string userId)
+        {
+            var user =await GetDetailsAsync(userId);
+            return user.ToUser();
         }
 
         public async Task<PaginatedList<LambadaUser>> SearchAsync(int page, int pageSize, string query = "")

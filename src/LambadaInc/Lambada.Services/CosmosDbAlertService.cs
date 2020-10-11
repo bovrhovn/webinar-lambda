@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
+using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Lambada.Interfaces;
 using Lambada.Models;
@@ -54,6 +57,23 @@ namespace Lambada.Services
                 Debug.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        public async Task<List<string>> GetUsersWithActivatedNotificationsAsync()
+        {
+            var query = "SELECT * FROM subscriptions";
+
+            var queryDefinition = new QueryDefinition(query);
+            var queryResultSetIterator = container.GetItemQueryIterator<UserAlertModel>(queryDefinition);
+
+            var list = new List<string>();
+            while (queryResultSetIterator.HasMoreResults)
+            {
+                var currentList = await queryResultSetIterator.ReadNextAsync();
+                list.AddRange(from cosmo in currentList where cosmo.On select cosmo.UserId);
+            }
+
+            return list;
         }
     }
 }

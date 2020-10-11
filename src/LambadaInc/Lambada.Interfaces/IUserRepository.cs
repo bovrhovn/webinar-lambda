@@ -7,5 +7,6 @@ namespace Lambada.Interfaces
     {
         Task<LambadaUser> LoginAsync(string email, string password);
         Task<LambadaUser> RegisterAsync(LambadaUser user);
+        Task<LambadaUser> GetUserDataByIdAsync(string userId);
     }
 }

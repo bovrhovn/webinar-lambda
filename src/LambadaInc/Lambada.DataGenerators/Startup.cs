@@ -16,12 +16,13 @@ namespace LambadaInc.Generators
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            var storageKey = Environment.GetEnvironmentVariable("GenerateOptions:StorageKey");
             builder.Services.AddScoped<IFactoryResultRepository, FactoryDeviceResultService>(_ =>
-                new FactoryDeviceResultService(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
+                new FactoryDeviceResultService(storageKey,
                     Environment.GetEnvironmentVariable("GenerateOptions:ResultTableName")));
 
             builder.Services.AddScoped<IStorageWorker, AzureStorageWorker>(_ =>
-                new AzureStorageWorker(Environment.GetEnvironmentVariable("GenerateOptions:StorageKey"),
+                new AzureStorageWorker(storageKey,
                     Environment.GetEnvironmentVariable("StorageOptions:ContainerName")));
 
             var factoryAzureSearch = new FactoryAzureSearchService(
@@ -34,10 +35,12 @@ namespace LambadaInc.Generators
             var cosmosDbName = Environment.GetEnvironmentVariable("GenerateOptions:CosmosDbDatabase");
 
             builder.Services.AddScoped<IAlertService, CosmosDbAlertService>(_ =>
-                new CosmosDbAlertService(
-                    cosmoConn,
-                    cosmosDbName,
+                new CosmosDbAlertService(cosmoConn, cosmosDbName,
                     Environment.GetEnvironmentVariable("GenerateOptions:AlertCollection")));
+
+            var userRepository = new UserRepository(storageKey,
+                Environment.GetEnvironmentVariable("GenerateOptions:UsersTableName"));
+            builder.Services.AddTransient<IUserRepository, UserRepository>(_ => userRepository);
 
             builder.Services.AddScoped<IFactoryRepository, FactoryDataServiceCosmoDb>(_ =>
                 new FactoryDataServiceCosmoDb(

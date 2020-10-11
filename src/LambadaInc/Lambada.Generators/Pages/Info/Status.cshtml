@@ -1,5 +1,8 @@
 @page
+@using Lambada.Generators.Options
+@using Microsoft.Extensions.Options
 @model Lambada.Generators.Pages.Info.StatusPageModel
+@inject IOptions<SignalrOptions> SignalROptions
 
 @{
     ViewData["Title"] = "Status page messages";
@@ -20,11 +23,12 @@
     <script type="application/javascript">
        document.addEventListener('DOMContentLoaded', function () {
             const connection = new signalR.HubConnectionBuilder()
-                        .withUrl('/messages')
+                        .withUrl('@SignalROptions.Value.MessagesUrl')
                         .build();
             bindConnectionMessage(connection);
             connection.start()
-                      .then(() => onConnected(connection));
+                      .then(() => onConnected(connection))
+                      .catch(console.error);
             
             $("#btnClear").click(function (event) {
                             $("#messages").empty();
@@ -40,8 +44,8 @@
             function bindConnectionMessage(connection) {
                   let messageCallback = function (message) {
                                 if (!message) return;                                
-                                var messageEntry = createMessageEntry(message);
-                                var messageBox = document.getElementById('messages');
+                                let messageEntry = createMessageEntry(message);
+                                let messageBox = document.getElementById('messages');
                                 messageBox.appendChild(messageEntry);
                                 messageBox.scrollTop = messageBox.scrollHeight;
                   };
@@ -50,7 +54,7 @@
                             
             function onConnected(connection) {
                     console.log('connection started');
-                    connection.send('broadcastMessage', 'Connected to Azure SignalR service');                                          
+                    connection.send('broadcastMessage', 'Connected to Azure SignalR service for messages retrieving');                                          
             }
         });
     </script>

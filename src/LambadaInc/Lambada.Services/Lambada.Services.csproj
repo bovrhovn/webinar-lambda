@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Lambada.Base\Lambada.Base.csproj" />
       <ProjectReference Include="..\Lambada.Interfaces\Lambada.Interfaces.csproj" />
     </ItemGroup>
 

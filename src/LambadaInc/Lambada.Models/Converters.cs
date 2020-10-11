@@ -1,7 +1,6 @@
 using System;
-using Lambada.Models;
 
-namespace Lambada.Generators.ViewModels
+namespace Lambada.Models
 {
     public static class Converters
     {
