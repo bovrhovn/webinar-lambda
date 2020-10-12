@@ -57,7 +57,6 @@ namespace LambadaInc.Generators
                             Target = "broadcastMessage",
                             Arguments = new object[] {message}
                         });
-                    
 
                     var money = document.GetPropertyValue<double>("EarnedMoney");
                     await signalRMessages.AddAsync(

@@ -12,9 +12,7 @@ namespace LambadaInc.Generators
         public static async Task RunAsync([TimerTrigger("30 * * * * *")] TimerInfo myTimer,
             ILogger log,
             [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
-            IAsyncCollector<SignalRMessage> signalRMessages,
-            [SignalR(HubName = "messages", ConnectionStringSetting = "AzureSignalRConnectionString")]
-            IAsyncCollector<SignalRMessage> signalRStatsMessages)
+            IAsyncCollector<SignalRMessage> signalRMessages)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
             for (int counter = 0; counter < 10; counter++)
@@ -26,7 +24,7 @@ namespace LambadaInc.Generators
                         Target = "broadcastMessage",
                         Arguments = new object[] {message}
                     });
-                await signalRStatsMessages.AddAsync(
+                await signalRMessages.AddAsync(
                     new SignalRMessage
                     {
                         Target = "stats",

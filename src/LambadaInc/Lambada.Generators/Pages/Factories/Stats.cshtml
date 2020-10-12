@@ -14,11 +14,12 @@
     Information about stats
 </h1>
 
-<div id="messages"></div>
-
+<div class="row">
+    <div id="messages" class="col-md-12"></div>
+</div>
 @if (Model.StatModels.Any())
 {
-    <table class="table table-light">
+    <table class="table table-hover">
         <tr>
             <td>Value</td>
             <td>Created on</td>
