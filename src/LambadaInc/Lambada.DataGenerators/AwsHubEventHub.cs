@@ -1,5 +1,7 @@
+using System;
 using System.Text;
 using System.Threading.Tasks;
+using Lambada.Models;
 using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
@@ -12,7 +14,10 @@ namespace LambadaInc.Generators
     {
         [FunctionName("AwsHubEventHub")]
         public async Task RunAsync([EventHubTrigger("trucks-from-aws", Connection = "EHConnectionString")]
-            EventData truckMobileMessage, 
+            EventData truckMobileMessage,
+            [CosmosDB(databaseName: "lambadadb", collectionName: "stats",
+                ConnectionStringSetting = "GenerateOptions:CosmosDbConnectionString")]
+            IAsyncCollector<FactoryStatModel> stats,
             [SignalR(HubName = "messages",ConnectionStringSetting = "AzureSignalRConnectionString")] IAsyncCollector<SignalRMessage> signalRMessages,
             ILogger log)
         {
@@ -20,6 +25,16 @@ namespace LambadaInc.Generators
             var message = Encoding.UTF8.GetString(truckMobileMessage.Body);
 
             var awsMessage = JsonConvert.DeserializeObject<AwsMessage>(message);
+
+            var moneyExpected = awsMessage.BeerCount * 2.5f;
+            //currently only one Factory has been aquired
+            await stats.AddAsync(new FactoryStatModel
+            {
+                FactoryId = "8167f58a-1388-4ae2-819d-538562bb404c",
+                DateCreated = DateTime.Now,
+                EarnedMoney = moneyExpected
+            });
+            
             string showMessage = $"I received message from AWS truck";
             await signalRMessages.AddAsync(
                 new SignalRMessage
@@ -35,6 +50,6 @@ namespace LambadaInc.Generators
     /// </summary>
     public class AwsMessage
     {
-        public string Temperature { get; set; }
+        public double BeerCount { get; set; }
     }
 }
