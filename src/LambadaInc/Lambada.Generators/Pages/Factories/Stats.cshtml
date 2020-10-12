@@ -55,7 +55,7 @@
                 
                 function createMessageEntry(encodedMsg) {
                                 let entry = document.createElement('div');                            
-                                entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' + encodedMsg +'<div>';                          
+                                entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' + encodedMsg +'€<div>';                          
                                 return entry;
                             }
                 
@@ -64,7 +64,7 @@
                                     if (!message) return;                                
                                     let messageEntry = createMessageEntry(message);
                                     let messageBox = document.getElementById('messages');
-                                    messageBox.appendChild("money is flowing <b>" + messageEntry + "</b> €");
+                                    messageBox.appendChild(messageEntry);
                                     messageBox.scrollTop = messageBox.scrollHeight;
                       };
                       connection.on('stats', messageCallback); 
