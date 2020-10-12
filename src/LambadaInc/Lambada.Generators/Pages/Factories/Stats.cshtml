@@ -1,4 +1,4 @@
-@page
+@page "{factoryId}"
 @using Microsoft.Extensions.Options
 @using Lambada.Generators.Options
 @using System.Globalization
@@ -14,41 +14,26 @@
     Information about stats
 </h1>
 
-<form method="get">
-    <div class="form-group">
-        <label for="selectFactory">Choose factory and see stats</label>
-        <select class="form-control" asp-for="FactoryId" id="selectFactory"></select>
-    </div>
-    <button type="submit" class="btn btn-primary">Get data</button>
-</form>
-
-@if (Model.StatModels == null)
-{
-    <p>No data avaible for Factory with ID @Model.FactoryId</p>
-}
-else
-{
-    if (Model.StatModels.Any())
-    {
-        <table class="table table-light">
-            <tr>
-                <td>Value</td>
-                <td>Created on</td>
-            </tr>
-            @foreach (var statModel in Model.StatModels)
-            {
-                <tr>
-                    <td>
-                        @statModel.EarnedMoney
-                    </td>
-                    <td>@statModel.DateCreated.ToString(CultureInfo.InvariantCulture)</td>
-                </tr>
-            }
-        </table>
-    }
-}
-
 <div id="messages"></div>
+
+@if (Model.StatModels.Any())
+{
+    <table class="table table-light">
+        <tr>
+            <td>Value</td>
+            <td>Created on</td>
+        </tr>
+        @foreach (var statModel in Model.StatModels)
+        {
+            <tr>
+                <td>
+                    @statModel.EarnedMoney
+                </td>
+                <td>@statModel.DateCreated.ToString(CultureInfo.InvariantCulture)</td>
+            </tr>
+        }
+    </table>
+}
 
 @section Scripts
 {
@@ -86,9 +71,8 @@ else
                                 
                 function onConnected(connection) {
                         console.log('connection started');
-                        connection.send('broadcastMessage', 'Connected to Azure SignalR service for stats retrieving');                                          
+                        connection.send('stats', 'Connected to Azure SignalR service for stats retrieving');                                          
                 }
             });
     </script>
 }
-

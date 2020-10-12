@@ -30,12 +30,12 @@ namespace Lambada.Generators.Pages.Factories
         [BindProperty] public List<FactoryStatModel> StatModels { get; set; }
         [BindProperty(SupportsGet = true)] public string FactoryId { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string factoryId)
         {
-            //let's leverage Azure Sync option
+            FactoryId = factoryId;
             Factories = await factorySearchService.SearchFactoryAsync("");
-            if (!string.IsNullOrEmpty(FactoryId)) 
-                StatModels = await statsService.GetStatsForFactoryAsync(FactoryId);
+            if (!string.IsNullOrEmpty(factoryId)) 
+                StatModels = await statsService.GetStatsForFactoryAsync(factoryId);
         }
     }
 }
