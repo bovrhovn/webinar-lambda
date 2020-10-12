@@ -26,8 +26,10 @@ namespace LambadaInc.Generators
 
             var awsMessage = JsonConvert.DeserializeObject<AwsMessage>(message);
 
-            var moneyExpected = awsMessage.BeerCount * 2.5f;
-            //currently only one Factory has been aquired
+            var moneyExpected = awsMessage.BottleCount * 2.5f;
+            log.LogInformation($"Expected money processed {moneyExpected}");
+            
+            //currently only one Factory has been aquired as trucks are assigned to them
             await stats.AddAsync(new FactoryStatModel
             {
                 FactoryId = "8167f58a-1388-4ae2-819d-538562bb404c",
@@ -35,7 +37,8 @@ namespace LambadaInc.Generators
                 EarnedMoney = moneyExpected
             });
             
-            string showMessage = $"I received message from AWS truck";
+            string showMessage = $"I received message from AWS truck and earned {moneyExpected}";
+            log.LogInformation(showMessage);
             await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
@@ -45,11 +48,8 @@ namespace LambadaInc.Generators
         }
     }
 
-    /// <summary>
-    /// TODO: Adrian needs to give me model
-    /// </summary>
     public class AwsMessage
     {
-        public double BeerCount { get; set; }
+        public int BottleCount { get; set; }
     }
 }

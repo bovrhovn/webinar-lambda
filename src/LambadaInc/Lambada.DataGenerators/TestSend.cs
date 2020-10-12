@@ -17,7 +17,7 @@ namespace LambadaInc.Generators
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
             for (int counter = 0; counter < 1000; counter++)
             {
-                var message = $"We are sending at the momment {counter} message through signalr";
+                var message = $"We are sending at the moment {counter} message through signalr";
                 await signalRMessages.AddAsync(
                     new SignalRMessage
                     {
