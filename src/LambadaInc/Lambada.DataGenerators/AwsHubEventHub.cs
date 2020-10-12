@@ -42,7 +42,7 @@ namespace LambadaInc.Generators
             await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
-                    Target = "broadcastMessage",
+                    Target = "stats",
                     Arguments = new object[] {showMessage}
                 });
         }
