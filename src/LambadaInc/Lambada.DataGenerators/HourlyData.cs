@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
 
 namespace LambadaInc.Generators
 {
@@ -14,12 +15,17 @@ namespace LambadaInc.Generators
     {
         private readonly IFactoryResultRepository factoryResultRepository;
         private readonly IFactoryRepository factoryRepository;
+        private readonly IAlertService alertService;
+        private readonly IUserRepository userRepository;
 
         public HourlyData(IFactoryResultRepository factoryResultRepository,
-            IFactoryRepository factoryRepository)
+            IFactoryRepository factoryRepository,
+            IAlertService alertService, IUserRepository userRepository)
         {
             this.factoryResultRepository = factoryResultRepository;
             this.factoryRepository = factoryRepository;
+            this.alertService = alertService;
+            this.userRepository = userRepository;
         }
 
         [FunctionName("HourlyData")]
@@ -37,6 +43,8 @@ namespace LambadaInc.Generators
             log.LogInformation($"Loaded {factories.Count} factories");
             var stopWatch = new Stopwatch();
             stopWatch.Start();
+            
+            int mainCounter = 0;
             foreach (var factory in factories)
             {
                 log.LogInformation($"Loading devices for factory {factory.Name}");
@@ -71,6 +79,7 @@ namespace LambadaInc.Generators
                             Arguments = new object[] {message}
                         });
                     counter++;
+                    mainCounter++;
                     moneyExpected += factoryDeviceResult.Quantity * beerCost;
                 }
 
@@ -94,6 +103,24 @@ namespace LambadaInc.Generators
                     });
 
                 log.LogInformation($"Device data finished at {DateTime.Now} ");
+            }
+
+            var users = await alertService.GetUsersWithActivatedNotificationsAsync();
+
+            foreach (var currentUserId in users)
+            {
+                var user = await userRepository.GetUserDataByIdAsync(currentUserId);
+                log.LogInformation($"Sending email to {user.Email}");
+                var emailModel = new EmailModel
+                {
+                    From = "bojan@vrhovnik.net",
+                    To = user.Email,
+                    Content = $"Finished with {mainCounter} beers produced at {factories.Count} factories",
+                    Subject = "Factory information report"
+                };
+                var emailMessage = JsonConvert.SerializeObject(emailModel);
+                await messages.AddAsync(new CloudQueueMessage(emailMessage));
+                log.LogInformation($"Email sent to {user.Email}");
             }
 
             stopWatch.Stop();
