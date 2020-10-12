@@ -33,6 +33,7 @@ async function execute_session(connection: mqtt.MqttClientConnection) {
                 let message = {
                     'TruckId': 'Truck-' + Math.floor(Math.random() * 11),
                     'Cargo': 'Happiness-226', // Ra-226 has 1600 years half-life
+                    'BottleCount': Math.round(Math.random() * (33000 - 36000) + 36000),
                     'Temperature': (Math.random() * (8.10 - 12.82) + 12.82).toFixed(2),
                     'Humidity': (Math.random() * (31.52 - 44.20) + 44.20).toFixed(2)
                 };
