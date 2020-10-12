@@ -55,7 +55,8 @@
                 
                 function createMessageEntry(encodedMsg) {
                                 let entry = document.createElement('div');                            
-                                entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' + encodedMsg +'€<div>';                          
+                                entry.innerHTML = '<div class="col-md-12 shadow-sm p-3 mb-5 bg-white rounded pull-left">' +
+                                 '<div class="col-md-6"><img class="img-fluid" src="@Url.Content("~/images/money.gif")"/></div><div class="col-md-6">' + encodedMsg +'€</div></div>';                          
                                 return entry;
                             }
                 
