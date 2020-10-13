@@ -39,6 +39,6 @@ With leveraging [Azure](https://azure.com) services, this is the idea and implem
 
 # Credits
 
-[Toastr project](https://github.com/CodeSeven/toastr)
-[Font Awesome](https://fontawesome.com/)
+- [Toastr project](https://github.com/CodeSeven/toastr)
+- [Font Awesome](https://fontawesome.com/)
 
