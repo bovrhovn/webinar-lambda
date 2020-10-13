@@ -27,6 +27,7 @@ namespace Lambada.Generators
             services.Configure<GeneratorOptions>(Configuration.GetSection("Generator"));
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
             services.Configure<StorageOptions>(Configuration.GetSection("StorageOptions"));
+            services.Configure<IotOptions>(Configuration.GetSection("IotHub"));
             
             services.AddScoped<IFactorySearchService, FactorySearchService>();
             services.AddScoped<IUserDataContext, UserDataContext>();
