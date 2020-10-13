@@ -37,6 +37,8 @@ With leveraging [Azure](https://azure.com) services, this is the idea and implem
 
 ![structure with Azure Services](https://csacoresettings.blob.core.windows.net/public/beer-factory-v3.png)
 
-## Credits
+# Credits
 
 [Toastr project](https://github.com/CodeSeven/toastr)
+[Font Awesome](https://fontawesome.com/)
+
