@@ -44,7 +44,12 @@ Leveraging [Azure](https://azure.com) services, here's the flow implemented in b
 
 ### On thw AWS side (The Outsourcer)
 
+_Connected Truck_ (`aws-truck` directory in the Cosmos branch) sends telemetry to AWS IoT Core. A lambda function picks it up and publishes the event to Azure Event Hubs. An Azure Function picks up events from the Event Hub and Azure SignalR delivers them to all subscribers (all browsers in our case).
+
 ![Slide1](https://user-images.githubusercontent.com/6472374/96035783-30a04a00-0e6c-11eb-85f3-a2a8fb81f26e.PNG)
+
+
+An alert-level event is detected in one of the trucks and a video frame is uploaded to an S3 bucket. A lambda function picks up the event, forms a Presigned URL and publishes the event using the EventGrid Schema to Azure Event Grid. This in turn calls the registered webhook (ASP.NET controller in our case), the payload of which is transformed into a SignalR notification in the frontend and rendered using toastr.
 
 ![Slide2](https://user-images.githubusercontent.com/6472374/96035793-3564fe00-0e6c-11eb-8678-e50061857bdf.PNG)
 
