@@ -1,4 +1,4 @@
-![hero-image](https://user-images.githubusercontent.com/6472374/96037052-fdf75100-0e6d-11eb-964a-f0b17ada915f.png)
+![hero-image](https://user-images.githubusercontent.com/6472374/96038077-4cf1b600-0e6f-11eb-96a4-28c611e9c61e.png)
 
 ![Build and deploy ASP.Net Core app](https://github.com/bovrhovn/webinar-lambda/workflows/Build%20and%20deploy%20ASP.Net%20Core%20app%20to%20Azure%20Web%20App%20-%20lambada-generator/badge.svg)
 
