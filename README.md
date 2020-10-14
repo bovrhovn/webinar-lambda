@@ -18,9 +18,9 @@ Demo is build across multiple branches:
 
 ### [Device data generator project](https://github.com/bovrhovn/webinar-lambda/tree/device-data-generate) - adding project with Azure Functions to generate data every 5 mins and store that data to Azure Tables
 
-### CosmosDb integration and realtime visualization project](https://github.com/bovrhovn/webinar-lambda/tree/cosmodb-event-hub) contains code for:
-- storing and retrieving data from CosmosDb
-- demonstrating creating Azure Functions to react on [CosmosDB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed) to send data in realtime to clients, calculate profit and many more operations
+### [DB integration and realtime visualization project](https://github.com/bovrhovn/webinar-lambda/tree/cosmodb-event-hub) contains code for:
+- storing and retrieving data from Cosmos DB
+- demonstrating creating Azure Functions to react on [Cosmos DB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed) to send data in realtime to clients, calculate profit and many more operations
 - sending reaction on change feed in realtime via [Azure Signalr](https://azure.microsoft.com/en-us/services/signalr-service/) to all connected clients to demonstrate, how we can send information from Azure Function to our own code
 - sending email notification via [SendGrid](https://sendgrid.com/)
 - subscribing to publisher [EventGrid](https://azure.microsoft.com/en-us/services/event-grid/) and reacting to alert in realtime with the use of Signalr
