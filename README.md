@@ -38,11 +38,11 @@ We are building a beer factory management software, which needs to follow these 
 
 ![basic structure](https://csacoresettings.blob.core.windows.net/public/beer-factory-v1.png)
 
-Leveraging [Azure](https://azure.com) services, here's the flow implemented in branch [CosmosDb integration and realtime visualization project](https://github.com/bovrhovn/webinar-lambda/tree/cosmodb-event-hub).
+Leveraging [Azure](https://azure.com) services, here's the flow implemented in branch [Cosmos DB integration and realtime visualization project](https://github.com/bovrhovn/webinar-lambda/tree/cosmodb-event-hub).
 
 ![structure with Azure Services](https://csacoresettings.blob.core.windows.net/public/beer-factory-v3.png)
 
-### On thw AWS side (The Outsourcer)
+### On the AWS side (The Outsourcer)
 
 _Connected Truck_ (`aws-truck` directory in the Cosmos branch) sends telemetry to AWS IoT Core. A lambda function picks it up and publishes the event to Azure Event Hubs. An Azure Function picks up events from the Event Hub and Azure SignalR delivers them to all subscribers (all browsers in our case).
 
