@@ -38,11 +38,11 @@ We are building a beer factory management software, which needs to follow these 
 2. Needs to have the ability to see and notify users about any challenges with that factory and load
 3. Needs to have the ability to search through device logs 
 
-![basic structure](https://csacoresettings.blob.core.windows.net/public/beer-factory-v1.png)
+![basic structure](https://webeudatastorage.blob.core.windows.net/web/beer-factory-v1.png)
 
 Leveraging [Azure](https://azure.com) services, here's the flow implemented in branch [Cosmos DB integration and realtime visualization project](https://github.com/bovrhovn/webinar-lambda/tree/cosmodb-event-hub).
 
-![structure with Azure Services](https://csacoresettings.blob.core.windows.net/public/beer-factory-v3.png)
+![structure with Azure Services](https://webeudatastorage.blob.core.windows.net/web/beer-factory-v3.png)
 
 ### On the AWS side (The Outsourcer)
 
