@@ -2,8 +2,6 @@
 
 ### This was a live event and its recording is available [here](https://meetings.lm-ag.de/JoinCertain/Lobby?e=a605dfff-951b-4cd2-bac6-3c747f6756d3).
 
-![Build and deploy ASP.Net Core app](https://github.com/bovrhovn/webinar-lambda/workflows/Build%20and%20deploy%20ASP.Net%20Core%20app%20to%20Azure%20Web%20App%20-%20lambada-generator/badge.svg)
-
 This repository contains demo code to showcase, how to leverage different Azure solutions to work with large amount of data and realtime representations of those results.
 
 ## Demo structure
